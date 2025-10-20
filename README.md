@@ -52,6 +52,7 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
 ### Prerequisites
 
 - Node.js 18+ and npm
+- Docker and Docker Compose (optional, for containerized deployment)
 
 ### Installation
 
@@ -72,6 +73,27 @@ npm run dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Docker Quick Start
+
+For production deployment with Docker:
+
+```bash
+# Using Docker Compose (recommended)
+docker-compose up -d
+
+# Or build and run manually
+npm run docker:build
+npm run docker:run
+
+# View logs
+npm run docker:logs
+
+# Stop container
+npm run docker:stop
+```
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment documentation.
 
 ## Development
 

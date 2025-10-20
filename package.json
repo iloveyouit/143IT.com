@@ -20,7 +20,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker:build": "docker build -t 143it-website:latest .",
+    "docker:run": "docker run -d --name 143it-web -p 3000:3000 143it-website:latest",
+    "docker:stop": "docker stop 143it-web && docker rm 143it-web",
+    "docker:logs": "docker logs -f 143it-web",
+    "docker:compose:up": "docker-compose up -d",
+    "docker:compose:down": "docker-compose down",
+    "docker:compose:logs": "docker-compose logs -f web"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
