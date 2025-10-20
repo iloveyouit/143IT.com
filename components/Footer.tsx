@@ -11,11 +11,11 @@ export default function Footer() {
             <Link href="/" className="text-2xl font-heading font-bold gradient-text">
               143IT
             </Link>
-            <p className="mt-4 text-text/80 max-w-md">
-              We Love IT — And We Make IT Love You Back.
+            <p className="mt-4 text-text/80 max-w-md font-semibold">
+              Automate. Evolve. Dominate.
             </p>
             <p className="mt-2 text-text/60 text-sm">
-              Managed Services, Cloud Automation, and AI-Powered Infrastructure Solutions.
+              Next-Gen IT Management with Cloud, Automation, and AI at the Core.
             </p>
 
             {/* Social Links */}

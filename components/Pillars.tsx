@@ -1,4 +1,7 @@
+"use client";
+
 import { Server, Zap, TrendingUp } from "lucide-react";
+import FadeInSection from "./FadeInSection";
 
 export default function Pillars() {
   const pillars = [
@@ -37,20 +40,21 @@ export default function Pillars() {
   return (
     <section className="py-20 px-6 bg-gradient-to-b from-transparent to-accent-1/5">
       <div className="container mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">
-            Our <span className="gradient-text">Three Pillars</span>
-          </h2>
-          <p className="text-lg text-text/80 max-w-2xl mx-auto">
-            A proven approach to modernizing IT infrastructure
-          </p>
-        </div>
+        <FadeInSection>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">
+              Our <span className="gradient-text">Three Pillars</span>
+            </h2>
+            <p className="text-lg text-text/80 max-w-2xl mx-auto">
+              A proven approach to modernizing IT infrastructure
+            </p>
+          </div>
+        </FadeInSection>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {pillars.map((pillar, index) => (
-            <div
-              key={index}
-              className="bg-background/50 backdrop-blur-sm border border-accent-1/20 rounded-xl p-8 hover:border-accent-1/50 transition-all duration-300 card-glow"
+            <FadeInSection key={index} delay={index * 0.2}>
+              <div className="bg-background/50 backdrop-blur-sm border border-accent-1/20 rounded-xl p-8 hover:border-accent-1/50 hover:scale-105 transition-all duration-300 card-glow"
             >
               <div className="bg-accent-1/10 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
                 <pillar.icon className="h-8 w-8 text-accent-1" />
@@ -70,7 +74,8 @@ export default function Pillars() {
                   </li>
                 ))}
               </ul>
-            </div>
+              </div>
+            </FadeInSection>
           ))}
         </div>
       </div>

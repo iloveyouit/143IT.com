@@ -15,13 +15,13 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  title: "143IT — MSP, Automation & AI-Powered Infrastructure",
-  description: "Managed IT services and AI automation that drive uptime. We love IT, and we make IT love you back.",
-  keywords: ["MSP", "Managed Services", "IT Automation", "Cloud Migration", "DevOps", "AI Integration", "Azure", "M365"],
+  title: "143IT — Automate. Evolve. Dominate.",
+  description: "Next-Gen IT Management with Cloud, Automation, and AI at the Core. MSP services that transform your infrastructure.",
+  keywords: ["MSP", "Managed Services", "IT Automation", "Cloud Migration", "DevOps", "AI Integration", "Azure", "M365", "Next-Gen IT"],
   authors: [{ name: "143IT" }],
   openGraph: {
-    title: "143IT — We Love IT. And We Make IT Love You Back.",
-    description: "Managed Services, Cloud Automation, and AI-Powered Infrastructure Solutions.",
+    title: "143IT — Automate. Evolve. Dominate.",
+    description: "Next-Gen IT Management with Cloud, Automation, and AI at the Core.",
     type: "website",
   },
 };
