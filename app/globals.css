@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-orbitron: 'Orbitron', 'Montserrat', sans-serif;
+    --font-inter: 'Inter', 'Nunito Sans', sans-serif;
+  }
+
+  body {
+    @apply bg-background text-text font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent-1 to-accent-2 bg-clip-text text-transparent;
+  }
+
+  .glow-effect {
+    text-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+  }
+
+  .card-glow {
+    box-shadow: 0 0 20px rgba(0, 224, 255, 0.1);
+  }
+
+  .btn-primary {
+    @apply bg-accent-1 hover:bg-ctaHover text-background font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-accent-1/50;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-accent-2 text-accent-2 hover:bg-accent-2 hover:text-background font-semibold px-6 py-3 rounded-lg transition-all duration-300;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
