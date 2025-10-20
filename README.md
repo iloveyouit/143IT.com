@@ -2,30 +2,50 @@
 
 Modern, responsive website for **143IT** — a Managed Service Provider specializing in automation, cloud modernization, and AI-powered infrastructure solutions.
 
+**Tagline:** "Automate. Evolve. Dominate."
+**Slogan:** "Next-Gen IT Management with Cloud, Automation, and AI at the Core."
+
 ## Features
 
-- **Modern Tech Stack**: Next.js 14, TypeScript, TailwindCSS
+- **Modern Tech Stack**: Next.js 14, TypeScript, TailwindCSS, Framer Motion
 - **Responsive Design**: Mobile-first, fully responsive across all devices
 - **SEO Optimized**: Meta tags, semantic HTML, fast loading times
-- **Dark Theme**: High-tech aesthetic with neon blue accents
+- **Dark Theme**: High-tech aesthetic with neon blue accents (#00E0FF)
+- **Animations**: Typing effects, scroll animations, animated counters, fade-in sections
+- **MDX Blog**: Full-featured blog with syntax highlighting and rich content
 - **Performance**: Optimized images, lazy loading, minimal JavaScript
 - **Accessibility**: WCAG 2.1 compliant
 
 ## Pages
 
-- **Home** (`/`) - Hero section, key pillars, featured services, case studies, blog highlights
-- **Services** (`/services`) - Comprehensive service offerings with detailed descriptions
+### Main Pages
+- **Home** (`/`) - Hero with typing effect, animated stats, three pillars, featured services, case studies, blog highlights
+- **Services** (`/services`) - Comprehensive service offerings with process overview
 - **Blog** (`/blog`) - Dynamic blog feed with search and category filters
 - **About** (`/about`) - Company story, mission, values, and capabilities
 - **Contact** (`/contact`) - Contact form with n8n integration ready
+
+### Service Detail Pages
+- **Managed IT** (`/services/managed-it`) - 24/7 monitoring, infrastructure management
+- **Cloud Modernization** (`/services/cloud-modernization`) - Azure/AWS migration, cost optimization
+- **Automation & DevOps** (`/services/automation-devops`) - IaC, CI/CD, GitOps workflows
+- **AI Integration** (`/services/ai-integration`) - ChatGPT, n8n, custom ML models
+- **Security & Compliance** (`/services/security-compliance`) - SOC, IAM, compliance frameworks
+
+### Blog Articles (MDX)
+- **Infrastructure as Code Guide** (`/blog/infrastructure-as-code-guide-2024`)
+- **Self-Healing Infrastructure** (`/blog/self-healing-infrastructure`)
 
 ## Tech Stack
 
 - **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [TailwindCSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Content**: [MDX](https://mdxjs.com/) with rehype plugins
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Fonts**: Inter, Orbitron (Google Fonts)
+- **Syntax Highlighting**: Highlight.js (Atom One Dark theme)
 
 ## Getting Started
 
@@ -59,27 +79,47 @@ npm run dev
 
 ```
 143IT.com/
-├── app/                    # Next.js App Router pages
-│   ├── about/             # About page
-│   ├── blog/              # Blog listing page
-│   ├── contact/           # Contact page
-│   ├── services/          # Services page
-│   ├── layout.tsx         # Root layout with Header/Footer
-│   ├── page.tsx           # Home page
-│   └── globals.css        # Global styles
-├── components/            # React components
-│   ├── Header.tsx         # Navigation header
-│   ├── Footer.tsx         # Site footer
-│   ├── Hero.tsx           # Home hero section
-│   ├── Pillars.tsx        # Three pillars section
-│   ├── FeaturedServices.tsx
-│   ├── CaseStudyHighlights.tsx
-│   ├── LatestInsights.tsx
-│   └── Newsletter.tsx     # Newsletter signup
-├── public/                # Static assets
-├── tailwind.config.ts     # TailwindCSS configuration
-├── tsconfig.json          # TypeScript configuration
-└── package.json           # Dependencies
+├── app/                           # Next.js App Router pages
+│   ├── about/                    # About page
+│   ├── blog/                     # Blog pages
+│   │   ├── page.tsx             # Blog listing
+│   │   ├── infrastructure-as-code-guide-2024/
+│   │   │   └── page.mdx         # MDX blog article
+│   │   └── self-healing-infrastructure/
+│   │       └── page.mdx         # MDX blog article
+│   ├── contact/                  # Contact page
+│   ├── services/                 # Services pages
+│   │   ├── page.tsx             # Services overview
+│   │   ├── managed-it/          # Managed IT detail
+│   │   ├── cloud-modernization/ # Cloud detail
+│   │   ├── automation-devops/   # Automation detail
+│   │   ├── ai-integration/      # AI detail
+│   │   └── security-compliance/ # Security detail
+│   ├── layout.tsx                # Root layout with Header/Footer
+│   ├── page.tsx                  # Home page
+│   └── globals.css               # Global styles + syntax highlighting
+├── components/                   # React components
+│   ├── Header.tsx               # Navigation header
+│   ├── Footer.tsx               # Site footer
+│   ├── Hero.tsx                 # Animated hero with typing effect
+│   ├── Pillars.tsx              # Three pillars with animations
+│   ├── FeaturedServices.tsx     # Service cards
+│   ├── CaseStudyHighlights.tsx  # Case study previews
+│   ├── LatestInsights.tsx       # Blog post previews
+│   ├── Newsletter.tsx           # Newsletter signup
+│   ├── AnimatedCounter.tsx      # Counting animation component
+│   ├── FadeInSection.tsx        # Scroll-triggered fade-in
+│   ├── TypingEffect.tsx         # Typewriter effect
+│   ├── BlogArticleLayout.tsx    # MDX blog wrapper
+│   ├── AuthorInfo.tsx           # Author bio component
+│   ├── RelatedPosts.tsx         # Related articles
+│   └── TableOfContents.tsx      # Auto-generated TOC
+├── mdx-components.tsx            # Custom MDX component styles
+├── public/                       # Static assets
+├── tailwind.config.ts            # TailwindCSS configuration
+├── tsconfig.json                 # TypeScript configuration
+├── next.config.js                # Next.js + MDX configuration
+└── package.json                  # Dependencies
 ```
 
 ### Available Scripts
@@ -106,12 +146,20 @@ npm run dev
 
 ### Components
 
-Custom Tailwind components available:
-- `.btn-primary` - Primary CTA button
+#### Tailwind Utility Classes
+- `.btn-primary` - Primary CTA button with hover effects
 - `.btn-secondary` - Secondary outlined button
-- `.gradient-text` - Gradient text effect
-- `.glow-effect` - Text glow effect
+- `.gradient-text` - Gradient text effect (accent-1 to accent-2)
+- `.glow-effect` - Text glow effect for headings
 - `.card-glow` - Card shadow glow
+- `.prose-blog` - MDX article styling wrapper
+
+#### React Components
+- **AnimatedCounter** - Spring-animated number counter
+- **FadeInSection** - Scroll-triggered fade-in with direction options
+- **TypingEffect** - Typewriter animation for text
+- **BlogArticleLayout** - Full-featured blog post layout
+- **TableOfContents** - Auto-generated with scroll spy
 
 ## Deployment
 
@@ -167,16 +215,29 @@ Target metrics:
 - Time to Interactive: < 3.0s
 - Cumulative Layout Shift: < 0.1
 
+## Completed Features
+
+- [x] Service detail pages (5 pages)
+- [x] Blog article pages with MDX support
+- [x] Animated homepage with typing effects
+- [x] Scroll-triggered animations
+- [x] Animated stat counters
+- [x] Syntax highlighting for code blocks
+- [x] Table of contents for blog posts
+- [x] Author info and related posts
+
 ## Future Enhancements
 
+- [ ] Pricing page
 - [ ] AI chatbot widget
-- [ ] Case study detail pages
-- [ ] Blog article pages with MDX support
-- [ ] Service detail pages
-- [ ] Client testimonials section
+- [ ] Case study detail pages (full articles)
+- [ ] Client testimonials section with carousel
 - [ ] Pricing calculator
 - [ ] Dark/light mode toggle
 - [ ] Analytics integration (Fathom/Plausible)
+- [ ] Newsletter integration with email service
+- [ ] Search functionality for blog
+- [ ] Blog categories and tag pages
 
 ## Contributing
 

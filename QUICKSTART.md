@@ -1,5 +1,7 @@
 # Quick Start Guide
 
+**Tagline:** "Automate. Evolve. Dominate."
+
 ## Install & Run
 
 ```bash
@@ -25,29 +27,47 @@ npm start
 ## Project Overview
 
 ### Current Pages
-- **/** - Home page with hero, pillars, services, case studies
-- **/services** - All MSP services with detailed features
-- **/blog** - Blog listing with featured post
+
+**Main Pages:**
+- **/** - Animated hero with typing effect, stats counters, pillars, services
+- **/services** - MSP services overview with process diagram
+- **/blog** - Blog listing with featured post and filters
 - **/about** - Company story, mission, values
 - **/contact** - Contact form (n8n integration ready)
 
+**Service Detail Pages:**
+- **/services/managed-it** - 24/7 infrastructure management
+- **/services/cloud-modernization** - Azure/AWS migration
+- **/services/automation-devops** - IaC, CI/CD, GitOps
+- **/services/ai-integration** - ChatGPT, n8n automation
+- **/services/security-compliance** - SOC, IAM, compliance
+
+**Blog Articles (MDX):**
+- **/blog/infrastructure-as-code-guide-2024** - Complete IaC guide with code examples
+- **/blog/self-healing-infrastructure** - PowerShell automation patterns
+
 ### Key Features Implemented
+- ✅ Animated homepage (typing effect, fade-ins, counters)
+- ✅ 5 detailed service pages
+- ✅ MDX blog with syntax highlighting
+- ✅ Table of contents for blog posts
+- ✅ Author info and related posts
 - ✅ Mobile-responsive design
-- ✅ Dark theme with neon blue accents
+- ✅ Dark theme with neon blue accents (#00E0FF)
 - ✅ SEO meta tags on all pages
-- ✅ Fast page loads (all static pre-rendered)
+- ✅ Fast page loads (static pre-rendered)
+- ✅ Framer Motion animations
 - ✅ Accessible navigation
-- ✅ Newsletter signup component
 
 ### Next Steps
-1. **Content**: Replace placeholder content with real copy
-2. **Blog Integration**: Connect to CMS (Notion API/Ghost/WordPress)
+1. **Pricing Page**: Create tiered pricing options
+2. **Content**: Replace placeholder content with real copy
 3. **n8n Webhooks**:
-   - Contact form → Update `app/contact/page.tsx`
-   - Newsletter → Update `components/Newsletter.tsx`
-4. **Analytics**: Add Fathom or Plausible
-5. **Service Pages**: Create individual service detail pages
-6. **Case Studies**: Add case study detail pages
+   - Contact form → Update `app/contact/page.tsx` line 31
+   - Newsletter → Update `components/Newsletter.tsx` line 15
+4. **Analytics**: Add Fathom or Plausible tracking
+5. **More Blog Posts**: Create additional MDX articles
+6. **Case Study Detail Pages**: Full articles with metrics
 
 ### Deployment
 - Push to GitHub
@@ -58,41 +78,94 @@ npm start
 
 ```
 app/
-├── about/page.tsx          # About page
-├── blog/page.tsx           # Blog listing
-├── contact/page.tsx        # Contact form
-├── services/page.tsx       # Services overview
-├── layout.tsx              # Root layout (Header/Footer)
-├── page.tsx                # Home page
-└── globals.css             # Global styles
+├── about/page.tsx                              # About page
+├── blog/
+│   ├── page.tsx                               # Blog listing
+│   ├── infrastructure-as-code-guide-2024/
+│   │   └── page.mdx                           # MDX blog article
+│   └── self-healing-infrastructure/
+│       └── page.mdx                           # MDX blog article
+├── contact/page.tsx                            # Contact form
+├── services/
+│   ├── page.tsx                               # Services overview
+│   ├── managed-it/page.tsx                    # Service detail
+│   ├── cloud-modernization/page.tsx           # Service detail
+│   ├── automation-devops/page.tsx             # Service detail
+│   ├── ai-integration/page.tsx                # Service detail
+│   └── security-compliance/page.tsx           # Service detail
+├── layout.tsx                                  # Root layout
+├── page.tsx                                    # Home page
+└── globals.css                                 # Global styles + syntax highlighting
 
 components/
-├── Header.tsx              # Site header
-├── Footer.tsx              # Site footer
-├── Hero.tsx                # Home hero section
-├── Pillars.tsx             # Three pillars
-├── FeaturedServices.tsx    # Service cards
-├── CaseStudyHighlights.tsx # Case studies
-├── LatestInsights.tsx      # Blog preview
-└── Newsletter.tsx          # Newsletter form
+├── Header.tsx                                  # Site header
+├── Footer.tsx                                  # Site footer
+├── Hero.tsx                                    # Animated hero
+├── Pillars.tsx                                 # Three pillars
+├── AnimatedCounter.tsx                         # Stats counter animation
+├── FadeInSection.tsx                           # Scroll animations
+├── TypingEffect.tsx                            # Typewriter effect
+├── BlogArticleLayout.tsx                       # MDX blog wrapper
+├── AuthorInfo.tsx                              # Author bio
+├── RelatedPosts.tsx                            # Related articles
+└── TableOfContents.tsx                         # Auto-generated TOC
+
+mdx-components.tsx                              # Custom MDX styling
+next.config.js                                  # Next.js + MDX config
+```
+
+## Writing New Blog Posts
+
+Create a new folder in `app/blog/[slug]/` with a `page.mdx` file:
+
+```mdx
+import BlogArticleLayout from "@/components/BlogArticleLayout";
+
+<BlogArticleLayout
+  title="Your Article Title"
+  date="2024-03-20"
+  readTime="10 min read"
+  author={{ name: "Your Name", bio: "Your bio" }}
+  tags={["Tag1", "Tag2"]}
+  category="Category Name"
+  relatedPosts={[...]}
+>
+
+Your content here with **markdown** and `code` support!
+
+```javascript
+const example = "Syntax highlighting works!";
+```
+
+</BlogArticleLayout>
 ```
 
 ## Customization
 
 ### Colors
-Edit `tailwind.config.ts` to change:
-- Background color
-- Accent colors
-- Text colors
+Edit `tailwind.config.ts`:
+- `background`: #0B0F1A
+- `accent-1`: #00E0FF (Neon Blue)
+- `accent-2`: #1E90FF (Dodger Blue)
 
 ### Fonts
-Edit `app/layout.tsx` to change:
-- Heading font (currently Orbitron)
-- Body font (currently Inter)
+Edit `app/layout.tsx`:
+- Heading: Orbitron
+- Body: Inter
 
-### Content
-All content is in the page/component files - simply edit the text!
+### Animations
+Edit animation speeds in components:
+- `AnimatedCounter`: duration prop
+- `FadeInSection`: delay prop
+- `TypingEffect`: speed prop
+
+## Testing Animations
+
+1. Refresh homepage to see typing effect
+2. Scroll to see fade-in animations
+3. Watch stats count up from 0
+4. Hover over pillar cards for scale effect
 
 ## Need Help?
 
-See the full README.md for detailed documentation.
+See the full **README.md** for detailed documentation.
