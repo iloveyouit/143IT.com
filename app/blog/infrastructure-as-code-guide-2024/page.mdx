@@ -1,0 +1,244 @@
+import BlogArticleLayout from "@/components/BlogArticleLayout";
+
+export const metadata = {
+  title: "The Complete Guide to Infrastructure as Code in 2024 | 143IT Blog",
+  description: "Discover how Infrastructure as Code is revolutionizing IT operations, from Terraform basics to advanced GitOps workflows.",
+};
+
+<BlogArticleLayout
+  title="The Complete Guide to Infrastructure as Code in 2024"
+  date="2024-03-18"
+  readTime="15 min read"
+  author={{
+    name: "Alex Chen",
+    bio: "DevOps architect at 143IT with 10+ years of experience in cloud infrastructure and automation. Passionate about turning operations into code."
+  }}
+  tags={["Infrastructure as Code", "Terraform", "DevOps", "Automation"]}
+  category="Automation Chronicles"
+  relatedPosts={[
+    {
+      title: "Building Self-Healing Infrastructure with PowerShell",
+      excerpt: "Learn how to implement automated remediation workflows that fix common issues before they impact users.",
+      href: "/blog/self-healing-infrastructure",
+      date: "2024-03-15"
+    },
+    {
+      title: "Infrastructure as Code: Terraform vs Ansible",
+      excerpt: "A practical comparison of two popular IaC tools and when to use each one in your DevOps pipeline.",
+      href: "/blog/terraform-vs-ansible",
+      date: "2024-03-10"
+    }
+  ]}
+>
+
+Infrastructure as Code (IaC) has transformed how we manage and provision IT infrastructure. Gone are the days of manual configuration and "snowflake servers" — modern infrastructure is defined, versioned, and deployed through code.
+
+## What is Infrastructure as Code?
+
+Infrastructure as Code is the practice of managing and provisioning infrastructure through machine-readable definition files, rather than physical hardware configuration or interactive configuration tools.
+
+Think of it this way: instead of logging into a server and manually installing software, you write code that describes the desired state, and automation tools make it happen.
+
+### Key Benefits
+
+- **Consistency**: No more configuration drift
+- **Speed**: Deploy in minutes, not days
+- **Version Control**: Track every change with Git
+- **Collaboration**: Review infrastructure changes like code
+- **Disaster Recovery**: Rebuild infrastructure instantly
+
+## Getting Started with Terraform
+
+Terraform is one of the most popular IaC tools. Here's a simple example that creates an Azure virtual machine:
+
+```hcl
+# Configure the Azure Provider
+provider "azurerm" {
+  features {}
+}
+
+# Create a resource group
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "East US"
+}
+
+# Create a virtual network
+resource "azurerm_virtual_network" "example" {
+  name                = "example-network"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+# Create a subnet
+resource "azurerm_subnet" "example" {
+  name                 = "internal"
+  resource_group_name  = azurerm_resource_group.example.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefixes     = ["10.0.2.0/24"]
+}
+```
+
+This code is **declarative** — you describe what you want, and Terraform figures out how to create it.
+
+## The IaC Workflow
+
+Here's the typical workflow when using Infrastructure as Code:
+
+1. **Write** - Define infrastructure in code files
+2. **Plan** - Preview changes before applying them
+3. **Apply** - Execute the changes
+4. **Version** - Commit to Git for history and collaboration
+5. **Iterate** - Make incremental improvements
+
+### Best Practices
+
+> "Infrastructure as Code is not just about automation — it's about bringing software engineering practices to operations."
+
+Follow these principles for successful IaC implementation:
+
+- **Modularize** your code for reusability
+- **Use variables** for environment-specific values
+- **Implement** remote state storage
+- **Run** automated tests on infrastructure code
+- **Document** your modules and patterns
+
+## Advanced Patterns
+
+### GitOps Workflow
+
+GitOps takes IaC to the next level by using Git as the single source of truth:
+
+```typescript
+// Example GitHub Actions workflow for Terraform
+name: 'Terraform CI/CD'
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve
+```
+
+### Multi-Environment Management
+
+Organize your code to support multiple environments:
+
+```
+infrastructure/
+├── modules/
+│   ├── networking/
+│   ├── compute/
+│   └── database/
+├── environments/
+│   ├── dev/
+│   ├── staging/
+│   └── production/
+└── global/
+```
+
+## Real-World Impact
+
+At 143IT, we've helped dozens of companies transition to Infrastructure as Code. Here's what we typically see:
+
+| Metric | Before IaC | After IaC |
+|--------|-----------|-----------|
+| Deployment Time | 2-4 days | 15 minutes |
+| Configuration Errors | 15-20 per month | 1-2 per month |
+| Recovery Time | 8+ hours | 30 minutes |
+| Cost per Deployment | $500-1000 | $50-100 |
+
+## Common Pitfalls to Avoid
+
+### 1. Not Using State Locking
+
+Always use remote state with locking to prevent concurrent modifications:
+
+```hcl
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "terraform-state"
+    storage_account_name = "tfstate143it"
+    container_name       = "tfstate"
+    key                  = "prod.terraform.tfstate"
+  }
+}
+```
+
+### 2. Hardcoding Values
+
+Use variables and data sources instead:
+
+```hcl
+variable "environment" {
+  description = "Environment name"
+  type        = string
+}
+
+locals {
+  common_tags = {
+    Environment = var.environment
+    ManagedBy   = "Terraform"
+    Team        = "Platform"
+  }
+}
+```
+
+### 3. Ignoring Security
+
+- Never commit secrets to Git
+- Use secret managers (Azure Key Vault, AWS Secrets Manager)
+- Implement least-privilege IAM policies
+- Scan IaC code for security issues
+
+## The Future of IaC
+
+Infrastructure as Code continues to evolve with exciting developments:
+
+- **Policy as Code**: Enforce compliance automatically
+- **AI-Assisted IaC**: Tools that suggest optimizations
+- **Cross-Cloud Abstractions**: Write once, deploy anywhere
+- **Self-Healing Infrastructure**: Automated drift correction
+
+## Getting Help
+
+Transitioning to Infrastructure as Code can be challenging. At **143IT**, we specialize in helping organizations adopt IaC best practices.
+
+We offer:
+- IaC architecture consulting
+- Terraform/Ansible training
+- Migration from manual processes
+- Ongoing support and optimization
+
+## Conclusion
+
+Infrastructure as Code is no longer optional — it's the foundation of modern IT operations. By treating infrastructure as software, you gain consistency, speed, and reliability that manual processes simply can't match.
+
+Start small, automate incrementally, and watch your infrastructure transform from a maintenance burden into a competitive advantage.
+
+Ready to modernize your infrastructure? Let's talk.
+
+</BlogArticleLayout>
+
+export default function Page({ children }) {
+  return children;
+}

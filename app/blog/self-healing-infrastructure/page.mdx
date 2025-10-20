@@ -1,0 +1,270 @@
+import BlogArticleLayout from "@/components/BlogArticleLayout";
+
+export const metadata = {
+  title: "Building Self-Healing Infrastructure with PowerShell | 143IT Blog",
+  description: "Learn how to implement automated remediation workflows that fix common issues before they impact users.",
+};
+
+<BlogArticleLayout
+  title="Building Self-Healing Infrastructure with PowerShell"
+  date="2024-03-15"
+  readTime="8 min read"
+  author={{
+    name: "Sarah Martinez",
+    bio: "Automation specialist at 143IT with expertise in PowerShell, Azure, and proactive infrastructure management."
+  }}
+  tags={["PowerShell", "Automation", "Self-Healing", "DevOps"]}
+  category="Automation Chronicles"
+  relatedPosts={[
+    {
+      title: "The Complete Guide to Infrastructure as Code in 2024",
+      excerpt: "Discover how Infrastructure as Code is revolutionizing IT operations, from Terraform basics to advanced GitOps workflows.",
+      href: "/blog/infrastructure-as-code-guide-2024",
+      date: "2024-03-18"
+    },
+    {
+      title: "Infrastructure as Code: Terraform vs Ansible",
+      excerpt: "A practical comparison of two popular IaC tools and when to use each one in your DevOps pipeline.",
+      href: "/blog/terraform-vs-ansible",
+      date: "2024-03-10"
+    }
+  ]}
+>
+
+Self-healing infrastructure automatically detects and fixes common problems without human intervention. By implementing automated remediation workflows, you can dramatically reduce downtime and free your team from repetitive firefighting.
+
+## Why Self-Healing Matters
+
+Traditional monitoring tells you *when* something breaks. Self-healing infrastructure goes a step further — it **fixes the problem automatically**.
+
+Consider these common scenarios:
+- Web service crashes → Auto-restart
+- Disk space fills up → Auto-cleanup of old logs
+- Application hangs → Kill and restart process
+- Certificate expiring → Auto-renew
+
+## PowerShell: The Automation Swiss Army Knife
+
+PowerShell is perfect for building self-healing scripts because it:
+- Works across Windows, Linux, and macOS
+- Has rich error handling capabilities
+- Integrates with Azure, AWS, and on-prem systems
+- Supports logging and notifications
+
+## Basic Self-Healing Pattern
+
+Here's a template for self-healing scripts:
+
+```powershell
+# Self-Healing Script Template
+param(
+    [string]$ServiceName = "MyWebApp",
+    [int]$MaxRestartAttempts = 3,
+    [string]$SlackWebhook = $env:SLACK_WEBHOOK
+)
+
+function Test-ServiceHealth {
+    param([string]$Name)
+
+    $service = Get-Service -Name $Name -ErrorAction SilentlyContinue
+    return $service -and $service.Status -eq 'Running'
+}
+
+function Restart-ServiceWithRetry {
+    param(
+        [string]$Name,
+        [int]$MaxAttempts
+    )
+
+    $attempt = 0
+    $success = $false
+
+    while ($attempt -lt $MaxAttempts -and !$success) {
+        $attempt++
+        Write-Log "Attempt $attempt of $MaxAttempts to restart $Name"
+
+        try {
+            Restart-Service -Name $Name -Force
+            Start-Sleep -Seconds 5
+
+            if (Test-ServiceHealth -Name $Name) {
+                $success = $true
+                Write-Log "Successfully restarted $Name"
+                Send-Notification -Type "Success" -Message "$Name recovered"
+            }
+        }
+        catch {
+            Write-Log "Failed attempt $attempt: $_"
+        }
+    }
+
+    return $success
+}
+
+# Main execution
+if (!(Test-ServiceHealth -Name $ServiceName)) {
+    Write-Log "$ServiceName is not healthy - attempting recovery"
+
+    if (Restart-ServiceWithRetry -Name $ServiceName -MaxAttempts $MaxRestartAttempts) {
+        Write-Log "Auto-remediation successful"
+    }
+    else {
+        Write-Log "Auto-remediation failed - escalating to on-call"
+        Send-Notification -Type "Critical" -Message "$ServiceName failed to recover"
+    }
+}
+```
+
+## Real-World Example: IIS Application Pool Recovery
+
+Here's a production-ready script that monitors and heals IIS application pools:
+
+```powershell
+# IIS Application Pool Self-Healing
+Import-Module WebAdministration
+
+$pools = Get-ChildItem IIS:\AppPools | Where-Object { $_.State -ne 'Started' }
+
+foreach ($pool in $pools) {
+    $poolName = $pool.Name
+    Write-Host "Detected stopped pool: $poolName"
+
+    # Check for worker process crashes
+    $crashes = Get-EventLog -LogName System -Source "WAS" -After (Get-Date).AddMinutes(-5) |
+        Where-Object { $_.EventID -eq 5011 -and $_.Message -like "*$poolName*" }
+
+    if ($crashes.Count -gt 3) {
+        # Too many crashes - escalate
+        Send-Alert -Priority High -Message "$poolName crashing repeatedly"
+    }
+    else {
+        # Attempt auto-recovery
+        Start-WebAppPool -Name $poolName
+        Start-Sleep -Seconds 3
+
+        if ((Get-WebAppPoolState -Name $poolName).Value -eq 'Started') {
+            Write-Log "Successfully restarted $poolName"
+            Send-Notification -Message "Auto-recovered $poolName"
+        }
+    }
+}
+```
+
+## Disk Space Management
+
+Automatically clean up old files when disk space runs low:
+
+```powershell
+$threshold = 20 # GB
+$cleanupPaths = @(
+    "C:\Logs",
+    "C:\Temp",
+    "C:\Windows\Temp"
+)
+
+$drive = Get-PSDrive C
+$freeSpaceGB = $drive.Free / 1GB
+
+if ($freeSpaceGB -lt $threshold) {
+    Write-Log "Low disk space detected: $freeSpaceGB GB free"
+
+    foreach ($path in $cleanupPaths) {
+        # Delete files older than 30 days
+        Get-ChildItem -Path $path -Recurse -File |
+            Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-30) } |
+            Remove-Item -Force -ErrorAction SilentlyContinue
+    }
+
+    $newFreeSpace = (Get-PSDrive C).Free / 1GB
+    $recovered = $newFreeSpace - $freeSpaceGB
+    Write-Log "Recovered $recovered GB of disk space"
+}
+```
+
+## Best Practices
+
+### 1. Always Log Actions
+
+```powershell
+function Write-Log {
+    param([string]$Message)
+
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logMessage = "[$timestamp] $Message"
+
+    # Log to file
+    Add-Content -Path "C:\Logs\self-healing.log" -Value $logMessage
+
+    # Also output to console
+    Write-Host $logMessage
+}
+```
+
+### 2. Implement Circuit Breakers
+
+Don't endlessly retry — escalate when automation fails:
+
+```powershell
+$maxAutoRemediation = 3
+$remediationCount = Get-RemediationCount -Service $ServiceName -Hours 1
+
+if ($remediationCount -ge $maxAutoRemediation) {
+    Write-Log "Circuit breaker triggered - too many auto-remediations"
+    Disable-AutoRemediation -Service $ServiceName
+    Send-Alert -Priority Critical
+}
+```
+
+### 3. Test in Dev First
+
+Always test self-healing scripts in non-production environments:
+
+```powershell
+if ($env:ENVIRONMENT -eq 'Production') {
+    # Extra safety checks
+    Confirm-SafeToRestart -Service $ServiceName
+}
+```
+
+## Integration with Monitoring
+
+Self-healing scripts work best when triggered by your monitoring system:
+
+```powershell
+# Azure Monitor Alert → Azure Automation Runbook
+param(
+    [object]$WebhookData
+)
+
+$alert = ConvertFrom-Json $WebhookData.RequestBody
+$resourceId = $alert.data.context.resourceId
+$metricName = $alert.data.context.condition.allOf[0].metricName
+
+if ($metricName -eq 'PercentProcessorTime' -and $alert.data.context.condition.allOf[0].metricValue -gt 90) {
+    # High CPU detected - investigate and remediate
+    Invoke-CPURemedi ation -ResourceId $resourceId
+}
+```
+
+## Measuring Success
+
+Track these metrics to prove value:
+
+- **MTTR Reduction**: Time to resolution before/after
+- **Automated Resolutions**: % of incidents fixed automatically
+- **False Positive Rate**: Unnecessary remediations
+- **Escalations**: Cases requiring human intervention
+
+## Conclusion
+
+Self-healing infrastructure isn't magic — it's systematic automation of your incident response playbooks. Start with your most common issues, build robust remediation scripts, and gradually expand coverage.
+
+At **143IT**, we help organizations implement self-healing patterns that reduce incident response times by 70%+ while improving overall reliability.
+
+Ready to build infrastructure that fixes itself? Let's talk.
+
+</BlogArticleLayout>
+
+export default function Page({ children }) {
+  return children;
+}

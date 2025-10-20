@@ -53,3 +53,35 @@
     }
   }
 }
+
+/* Syntax Highlighting */
+@import 'highlight.js/styles/atom-one-dark.css';
+
+.hljs {
+  @apply bg-transparent;
+}
+
+pre code.hljs {
+  padding: 0;
+}
+
+/* MDX Article Styles */
+.prose-blog {
+  @apply max-w-none;
+}
+
+.prose-blog img {
+  @apply rounded-xl border border-accent-1/20 my-8;
+}
+
+.prose-blog a {
+  @apply text-accent-1 hover:text-ctaHover underline transition-colors;
+}
+
+.prose-blog code {
+  @apply bg-accent-1/10 text-accent-1 px-2 py-1 rounded text-sm font-mono;
+}
+
+.prose-blog pre code {
+  @apply bg-transparent text-inherit p-0;
+}
