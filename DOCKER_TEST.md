@@ -1,5 +1,8 @@
 # Docker Test Environment - 143IT Website
 
+**Version:** 1.1.0
+**Last Updated:** October 2025
+
 Quick guide to test the Docker deployment locally before deploying to production.
 
 ## Prerequisites
@@ -91,19 +94,25 @@ You should see the 143IT website running in a containerized environment!
 
 The Docker build process:
 
-1. **Stage 1: Dependencies** (~1 min)
+1. **Stage 1: Dependencies** (~5-6 sec)
    - Installs npm packages in Alpine Linux container
    - Creates optimized node_modules
+   - Uses package-lock.json for reproducible builds
 
-2. **Stage 2: Build** (~2-3 min)
-   - Compiles Next.js application
-   - Generates static pages
+2. **Stage 2: Build** (~14 sec)
+   - Compiles Next.js application with ESM config (next.config.mjs)
+   - Generates all 15 static pages
    - Creates standalone output
+   - Optimizes bundles for production
+   - **Build output:** Home page 42.9 kB, shared JS 87.2 kB
 
-3. **Stage 3: Runtime** (~10 sec)
+3. **Stage 3: Runtime** (~1 sec)
    - Copies only production files
-   - Sets up non-root user
+   - Sets up non-root user (nextjs:nodejs)
    - Creates minimal ~150MB final image
+   - Alpine Linux base for security and size
+
+**Total build time:** ~14 seconds (first build), ~5 seconds (cached)
 
 ## Viewing Logs
 

@@ -140,16 +140,33 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment documentation.
 ├── public/                       # Static assets
 ├── tailwind.config.ts            # TailwindCSS configuration
 ├── tsconfig.json                 # TypeScript configuration
-├── next.config.js                # Next.js + MDX configuration
-└── package.json                  # Dependencies
+├── next.config.mjs               # Next.js + MDX configuration (ESM)
+├── package.json                  # Dependencies
+├── Dockerfile                    # Docker multi-stage build
+├── docker-compose.yml            # Docker Compose configuration
+├── .dockerignore                 # Docker build exclusions
+└── docker-test.sh                # Automated deployment test script
 ```
 
 ### Available Scripts
 
+**Development:**
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint
+
+**Docker:**
+- `npm run docker:build` - Build Docker image
+- `npm run docker:run` - Run Docker container
+- `npm run docker:stop` - Stop and remove container
+- `npm run docker:logs` - View container logs
+- `npm run docker:compose:up` - Start with Docker Compose
+- `npm run docker:compose:down` - Stop Docker Compose
+- `npm run docker:compose:logs` - View Compose logs
+
+**Testing:**
+- `./docker-test.sh` - Run automated Docker deployment test
 
 ## Design System
 
@@ -185,17 +202,75 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment documentation.
 
 ## Deployment
 
-### Vercel (Recommended)
+The 143IT website supports multiple deployment options. Choose based on your infrastructure needs.
+
+### Docker Deployment (Recommended for Control & Flexibility)
+
+**Quick Start:**
+```bash
+# Automated test and deployment
+./docker-test.sh
+
+# Or manually with Docker Compose
+docker-compose up -d
+
+# View logs
+docker-compose logs -f web
+```
+
+**Production Ready Features:**
+- ✅ Multi-stage build (~150MB optimized image)
+- ✅ Non-root user security
+- ✅ Standalone Next.js output
+- ✅ Alpine Linux base
+- ✅ Health checks included
+- ✅ Production-optimized build
+
+**Deploy To:**
+- VPS (DigitalOcean, Linode, Vultr) - $5-20/month
+- AWS ECS / Azure Container Instances
+- Google Cloud Run
+- Kubernetes clusters
+- Any Docker-compatible platform
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete Docker documentation including SSL setup, monitoring, and production best practices.
+
+---
+
+### Vercel (Recommended for Serverless)
+
+**Best for:** Quick deployment, automatic scaling, zero configuration
 
 1. Push your code to GitHub
 2. Import project to [Vercel](https://vercel.com)
 3. Deploy with one click
 
+**Features:** Automatic HTTPS, global CDN, preview deployments, free tier available
+
+**Vercel CLI:**
+```bash
+npm i -g vercel
+vercel login
+vercel --prod
+```
+
+---
+
 ### Other Platforms
 
-- **Netlify**: Works out of the box
+- **Netlify**: Works out of the box with Next.js plugin
 - **Azure Static Web Apps**: Follow [Azure docs](https://azure.microsoft.com/en-us/services/app-service/static/)
 - **AWS Amplify**: Compatible with Next.js
+- **Railway**: Easy Docker deployment with free tier
+
+### Deployment Comparison
+
+| Platform | Cost | Control | Setup Time | SSL | Scaling |
+|----------|------|---------|------------|-----|---------|
+| Docker (VPS) | $5-20/mo | Full | 30 min | Manual | Manual |
+| Vercel | Free-$20/mo | Limited | 5 min | Auto | Auto |
+| AWS ECS | Pay-as-go | High | 60 min | Manual | Auto |
+| Netlify | Free-$19/mo | Limited | 5 min | Auto | Auto |
 
 ## Integrations
 
@@ -239,6 +314,8 @@ Target metrics:
 
 ## Completed Features
 
+**Core Functionality:**
+- [x] 15 pages (13 static + 2 blog articles)
 - [x] Service detail pages (5 pages)
 - [x] Blog article pages with MDX support
 - [x] Animated homepage with typing effects
@@ -247,6 +324,14 @@ Target metrics:
 - [x] Syntax highlighting for code blocks
 - [x] Table of contents for blog posts
 - [x] Author info and related posts
+
+**Deployment & DevOps:**
+- [x] Docker multi-stage build
+- [x] Docker Compose configuration
+- [x] Automated deployment testing (docker-test.sh)
+- [x] ESM module configuration (next.config.mjs)
+- [x] Production-optimized build (~150MB image)
+- [x] Comprehensive deployment documentation
 
 ## Future Enhancements
 
@@ -260,6 +345,8 @@ Target metrics:
 - [ ] Newsletter integration with email service
 - [ ] Search functionality for blog
 - [ ] Blog categories and tag pages
+- [ ] CI/CD pipeline (GitHub Actions)
+- [ ] Automated backups
 
 ## Contributing
 

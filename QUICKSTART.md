@@ -1,8 +1,11 @@
 # Quick Start Guide
 
 **Tagline:** "Automate. Evolve. Dominate."
+**Version:** 1.1.0 (Docker Ready)
 
-## Install & Run
+## Development Setup
+
+### Local Development
 
 ```bash
 # Install dependencies
@@ -14,7 +17,7 @@ npm run dev
 
 Visit **http://localhost:3000** to see the site.
 
-## Build for Production
+### Production Build (Local)
 
 ```bash
 # Create production build
@@ -23,6 +26,46 @@ npm run build
 # Run production server
 npm start
 ```
+
+## Docker Deployment
+
+### Quick Test (Automated)
+
+```bash
+# Run automated deployment test
+./docker-test.sh
+```
+
+This script will:
+- ✅ Verify Docker is installed
+- ✅ Check port 3000 availability
+- ✅ Build optimized Docker image
+- ✅ Start container
+- ✅ Verify website is accessible
+
+### Manual Docker Deployment
+
+```bash
+# Using Docker Compose (recommended)
+docker-compose up -d
+
+# Or use npm scripts
+npm run docker:compose:up
+
+# View logs
+npm run docker:compose:logs
+
+# Stop
+npm run docker:compose:down
+```
+
+### Docker Build Details
+
+- **Build time:** ~14 seconds (cached builds faster)
+- **Image size:** ~150MB (optimized)
+- **Platform:** Alpine Linux
+- **Security:** Non-root user
+- **Output:** Standalone Next.js build
 
 ## Project Overview
 
@@ -60,19 +103,64 @@ npm start
 - ✅ Accessible navigation
 
 ### Next Steps
-1. **Pricing Page**: Create tiered pricing options
-2. **Content**: Replace placeholder content with real copy
-3. **n8n Webhooks**:
-   - Contact form → Update `app/contact/page.tsx` line 31
-   - Newsletter → Update `components/Newsletter.tsx` line 15
-4. **Analytics**: Add Fathom or Plausible tracking
-5. **More Blog Posts**: Create additional MDX articles
-6. **Case Study Detail Pages**: Full articles with metrics
 
-### Deployment
-- Push to GitHub
-- Connect to Vercel/Netlify
-- Deploy!
+**For Production Deployment:**
+1. **Choose Platform**:
+   - Docker on VPS (DigitalOcean, Linode) - Full control
+   - Vercel - Quick serverless deployment
+   - AWS/Azure - Enterprise scale
+
+2. **Configure SSL/TLS**:
+   - Docker: Use nginx + Let's Encrypt or Caddy
+   - Vercel/Netlify: Automatic HTTPS
+
+3. **Set Environment Variables**:
+   - n8n webhook URLs
+   - Analytics tracking IDs
+   - Custom domain configuration
+
+4. **Content Updates**:
+   - Replace placeholder text with real copy
+   - Add real author avatars
+   - Update social media links
+   - Add client logos/testimonials
+
+5. **Integrations**:
+   - Contact form → n8n webhook (`app/contact/page.tsx:31`)
+   - Newsletter → n8n webhook (`components/Newsletter.tsx:15`)
+   - Analytics → Fathom/Plausible
+
+6. **Additional Content**:
+   - Create 5-10 more blog posts
+   - Add case study detail pages
+   - Build pricing page
+
+### Deployment Options
+
+**Docker (VPS):**
+```bash
+# SSH to VPS
+ssh user@your-server.com
+
+# Clone repo
+git clone https://github.com/yourusername/143IT.com.git
+cd 143IT.com
+
+# Deploy
+docker-compose up -d
+```
+
+**Vercel:**
+```bash
+# Push to GitHub
+git push origin main
+
+# Or use CLI
+npm i -g vercel
+vercel --prod
+```
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment guides.
 
 ## File Structure Quick Reference
 
