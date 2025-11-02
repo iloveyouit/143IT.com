@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { User } from "lucide-react";
 
 interface AuthorInfoProps {
@@ -15,10 +16,12 @@ export default function AuthorInfo({ author }: AuthorInfoProps) {
         {/* Avatar */}
         <div className="flex-shrink-0">
           {author.avatar ? (
-            <img
+            <Image
               src={author.avatar}
               alt={author.name}
-              className="w-20 h-20 rounded-full border-2 border-accent-1/30"
+              width={80}
+              height={80}
+              className="w-20 h-20 rounded-full border-2 border-accent-1/30 object-cover"
             />
           ) : (
             <div className="w-20 h-20 rounded-full bg-accent-1/10 border-2 border-accent-1/30 flex items-center justify-center">
