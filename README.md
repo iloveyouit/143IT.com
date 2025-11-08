@@ -8,6 +8,7 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
 ## Features
 
 - **Modern Tech Stack**: Next.js 14, TypeScript, TailwindCSS, Framer Motion
+- **AI Chatbot Widget**: OpenAI-powered assistant for service inquiries and lead qualification
 - **Responsive Design**: Mobile-first, fully responsive across all devices
 - **SEO Optimized**: Meta tags, semantic HTML, fast loading times
 - **Dark Theme**: High-tech aesthetic with neon blue accents (#00E0FF)
@@ -72,12 +73,22 @@ cd 143IT.com
 npm install
 ```
 
-3. Run the development server:
+3. Configure environment variables:
+```bash
+cp .env.example .env.local
+```
+Edit `.env.local` and add your OpenAI API key:
+```
+OPENAI_API_KEY=your_actual_api_key_here
+```
+Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Docker Quick Start
 
@@ -277,6 +288,44 @@ vercel --prod
 | AWS ECS | Pay-as-go | High | 60 min | Manual | Auto |
 | Netlify | Free-$19/mo | Limited | 5 min | Auto | Auto |
 
+## AI Chatbot Widget
+
+The website includes an intelligent AI chatbot powered by OpenAI that appears on every page.
+
+### Features
+- **Floating Widget**: Fixed bottom-right chat button with smooth animations
+- **Smart Conversations**: AI assistant with full knowledge of 143IT services
+- **Multi-Purpose**:
+  - Answer questions about services and pricing
+  - Provide technical support guidance
+  - Qualify leads by understanding business needs
+  - Direct urgent issues to human support
+- **Modern UI**: Dark theme matching the site aesthetic
+- **Responsive**: Works perfectly on mobile and desktop
+- **Persistent**: Chat history maintained during session
+
+### Configuration
+
+1. Add your OpenAI API key to `.env.local`:
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+2. (Optional) Customize the model in `app/api/chat/route.ts`:
+```typescript
+model: 'gpt-4-turbo-preview', // or 'gpt-3.5-turbo' for faster/cheaper responses
+```
+
+3. The chatbot automatically loads on all pages via the root layout
+
+### Customization
+
+The chatbot's knowledge and behavior can be customized in `app/api/chat/route.ts` by modifying the `SYSTEM_PROMPT` constant. It currently includes:
+- Complete information about 143IT services
+- Lead qualification questions
+- Technical support guidance
+- Contact information
+
 ## Integrations
 
 ### n8n Contact Form
@@ -330,6 +379,13 @@ Target metrics:
 - [x] Table of contents for blog posts
 - [x] Author info and related posts
 
+**AI Integration:**
+- [x] AI chatbot widget with OpenAI integration
+- [x] Context-aware responses about 143IT services
+- [x] Lead qualification capabilities
+- [x] Technical support assistance
+- [x] Floating chat interface with animations
+
 **Deployment & DevOps:**
 - [x] Docker multi-stage build
 - [x] Docker Compose configuration
@@ -341,7 +397,6 @@ Target metrics:
 ## Future Enhancements
 
 - [ ] Pricing page
-- [ ] AI chatbot widget
 - [ ] Case study detail pages (full articles)
 - [ ] Client testimonials section with carousel
 - [ ] Pricing calculator

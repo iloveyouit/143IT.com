@@ -2,6 +2,33 @@
 
 All notable changes to the 143IT website will be documented in this file.
 
+## [1.2.0] - 2025-11-08
+
+### Added
+- **AI Chatbot Widget**: OpenAI-powered chatbot for service inquiries and lead qualification
+  - Floating chat button with smooth animations (Framer Motion)
+  - Intelligent responses about 143IT services
+  - Multi-purpose: service questions, technical support, lead qualification
+  - Dark theme UI matching site aesthetic
+  - Mobile responsive design
+  - Session-based chat history
+  - Configurable via environment variables
+  - OpenAI GPT-4 Turbo integration
+
+- **Dependencies**:
+  - Added `openai` package (v6.8.1) for AI integration
+  - Environment variable configuration (.env.local)
+
+- **Components**:
+  - `components/ChatBot.tsx` - Main chatbot UI component
+  - `app/api/chat/route.ts` - OpenAI API integration endpoint
+  - `.env.example` - Environment configuration template
+
+### Changed
+- **README.md**: Added comprehensive AI Chatbot Widget section
+- **Features List**: Moved AI chatbot from future enhancements to completed features
+- **Installation Guide**: Added OpenAI API key setup instructions
+
 ## [1.1.1] - 2025-01-XX
 
 ### Added
