@@ -12,7 +12,7 @@ export default function Footer() {
               143IT
             </Link>
             <p className="mt-4 text-text/80 max-w-md font-semibold">
-              Automate. Evolve. Dominate.
+              Automate & Dominate with AI
             </p>
             <p className="mt-2 text-text/60 text-sm">
               Next-Gen IT Management with Cloud, Automation, and AI at the Core.

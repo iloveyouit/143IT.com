@@ -333,4 +333,4 @@ If you encounter issues:
 
 ---
 
-**Built with ❤️ by 143IT** | Automate. Evolve. Dominate.
+**Built with ❤️ by 143IT** | Automate & Dominate with AI

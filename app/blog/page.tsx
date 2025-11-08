@@ -98,6 +98,7 @@ export default function BlogPage() {
                 type="text"
                 placeholder="Search articles..."
                 className="w-full pl-12 pr-6 py-4 bg-background/50 border border-accent-1/30 rounded-lg text-text placeholder-text/50 focus:outline-none focus:border-accent-1 transition-colors"
+                aria-label="Search blog articles"
               />
             </div>
           </div>

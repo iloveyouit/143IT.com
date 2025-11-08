@@ -2,7 +2,7 @@
 
 Complete guide for deploying the 143IT website using Docker or traditional hosting platforms.
 
-**Tagline:** "Automate. Evolve. Dominate."
+**Tagline:** "Automate & Dominate with AI"
 
 ## Table of Contents
 
@@ -687,4 +687,4 @@ For deployment assistance:
 
 ---
 
-**Built with ❤️ by 143IT** | Automate. Evolve. Dominate.
+**Built with ❤️ by 143IT** | Automate & Dominate with AI

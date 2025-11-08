@@ -3,7 +3,7 @@ import { Heart, Target, Zap, Users, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About 143IT — Automate. Evolve. Dominate. | MSP & Automation Experts",
+  title: "About 143IT — Automate & Dominate with AI | MSP & Automation Experts",
   description: "Next-Gen IT Management with Cloud, Automation, and AI at the Core. Learn how 143IT transforms businesses with cutting-edge infrastructure solutions.",
 };
 
@@ -48,7 +48,7 @@ export default function AboutPage() {
       <section className="py-20 px-6 bg-gradient-to-b from-accent-1/5 to-transparent">
         <div className="container mx-auto max-w-4xl text-center">
           <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6">
-            <span className="gradient-text glow-effect">Automate. Evolve. Dominate.</span>
+            <span className="gradient-text glow-effect">Automate & Dominate with AI</span>
           </h1>
           <p className="text-xl text-text/80">
             Next-Gen IT Management Built for the Future.

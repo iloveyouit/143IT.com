@@ -54,7 +54,7 @@ export default function Hero() {
           <FadeInSection delay={0.3}>
             <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 leading-tight">
               <span className="gradient-text glow-effect">
-                <TypingEffect text="Automate. Evolve. Dominate." speed={80} />
+                <TypingEffect text="Automate & Dominate with AI" speed={80} />
               </span>
             </h1>
           </FadeInSection>

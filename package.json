@@ -1,7 +1,7 @@
 {
   "name": "143it-website",
-  "version": "1.1.0",
-  "description": "Modern MSP website with Next.js 14, MDX blog, Framer Motion animations, and Docker deployment. Automate. Evolve. Dominate.",
+  "version": "1.1.1",
+  "description": "Modern MSP website with Next.js 14, MDX blog, Framer Motion animations, and Docker deployment. Automate & Dominate with AI",
   "author": "143IT",
   "private": true,
   "keywords": [
