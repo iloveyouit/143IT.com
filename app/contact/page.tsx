@@ -46,19 +46,19 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: "Email",
-      value: "hello@143it.com",
-      href: "mailto:hello@143it.com",
+      value: "support@143it.com",
+      href: "mailto:support@143it.com",
     },
     {
       icon: Phone,
       title: "Phone",
-      value: "+1 (555) 143-4848",
-      href: "tel:+15551434848",
+      value: "+1 (720) 292-6098",
+      href: "tel:+17202926098",
     },
     {
       icon: MapPin,
       title: "Location",
-      value: "Remote-First, Serving USA",
+      value: "Remote-First, Serving USA and CA",
       href: null,
     },
   ];

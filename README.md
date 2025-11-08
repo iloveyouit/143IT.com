@@ -362,7 +362,7 @@ Target metrics:
 
 ## Support
 
-For questions or support, contact: hello@143it.com
+For questions or support, contact: support@143it.com
 
 ---
 
