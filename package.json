@@ -1,7 +1,7 @@
 {
   "name": "143it-website",
-  "version": "1.1.1",
-  "description": "Modern MSP website with Next.js 14, MDX blog, Framer Motion animations, and Docker deployment. Automate & Dominate with AI",
+  "version": "1.2.0",
+  "description": "Modern MSP website with Next.js 14, AI Chatbot, MDX blog, Framer Motion animations, and Docker deployment. Automate & Dominate with AI",
   "author": "143IT",
   "private": true,
   "keywords": [
@@ -37,6 +37,7 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.292.0",
     "next": "^14.2.0",
+    "openai": "^6.8.1",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "reading-time": "^1.5.0",

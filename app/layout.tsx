@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import StructuredData from "@/components/StructuredData";
 import Analytics from "@/components/Analytics";
+import ChatBot from "@/components/ChatBot";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -54,6 +55,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </ErrorBoundary>
+        <ChatBot />
         <Analytics />
       </body>
     </html>
