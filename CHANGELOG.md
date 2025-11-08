@@ -2,6 +2,34 @@
 
 All notable changes to the 143IT website will be documented in this file.
 
+## [1.1.1] - 2025-01-XX
+
+### Added
+- **New Pages**:
+  - Resources page (`/resources`) - IT guides, tools, downloads, and learning resources
+  - Privacy Policy page (`/legal/privacy`) - Complete privacy policy with GDPR compliance
+  - Terms of Service page (`/legal/terms`) - Terms and conditions for website usage
+
+### Changed
+- **Brand Identity**:
+  - Updated tagline from "Automate. Evolve. Dominate." to "Automate & Dominate with AI"
+  - Updated across all pages, components, and documentation
+
+- **Contact Information**:
+  - Email: Changed from `hello@143it.com` to `support@143it.com`
+  - Phone: Updated to `+1 (720) 292-6098`
+  - Location: Updated to "Remote-First, Serving USA and CA"
+
+- **Social Media Links**:
+  - GitHub: Added link to https://github.com/iloveyouit
+  - LinkedIn: Added link to https://www.linkedin.com/in/rob-loftin-143it
+  - Added proper `target="_blank"` and `rel="noopener noreferrer"` for security
+  - Added `aria-label` attributes for accessibility
+
+### Fixed
+- Fixed broken footer links (404 errors) by creating missing pages
+- Improved accessibility with proper ARIA labels on social media links
+
 ## [1.1.0] - 2025-10-20
 
 ### Added
@@ -113,4 +141,4 @@ Route (app)                                  Size     First Load JS
 
 ---
 
-**Built with ❤️ by 143IT** | Automate. Evolve. Dominate.
+**Built with ❤️ by 143IT** | Automate & Dominate with AI

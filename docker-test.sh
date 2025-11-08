@@ -7,7 +7,7 @@ set -e  # Exit on error
 
 echo "======================================"
 echo "143IT Docker Test Environment"
-echo "Automate. Evolve. Dominate."
+echo "Automate & Dominate with AI"
 echo "======================================"
 echo ""
 

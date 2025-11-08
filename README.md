@@ -2,7 +2,7 @@
 
 Modern, responsive website for **143IT** — a Managed Service Provider specializing in automation, cloud modernization, and AI-powered infrastructure solutions.
 
-**Tagline:** "Automate. Evolve. Dominate."
+**Tagline:** "Automate & Dominate with AI"
 **Slogan:** "Next-Gen IT Management with Cloud, Automation, and AI at the Core."
 
 ## Features
@@ -24,6 +24,11 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
 - **Blog** (`/blog`) - Dynamic blog feed with search and category filters
 - **About** (`/about`) - Company story, mission, values, and capabilities
 - **Contact** (`/contact`) - Contact form with n8n integration ready
+- **Case Studies** (`/case-studies`) - Real client success stories and results
+- **Resources** (`/resources`) - IT guides, tools, downloads, and learning resources
+- **Pricing** (`/pricing`) - Service pricing information
+- **Privacy Policy** (`/legal/privacy`) - Privacy policy and data protection
+- **Terms of Service** (`/legal/terms`) - Terms and conditions
 
 ### Service Detail Pages
 - **Managed IT** (`/services/managed-it`) - 24/7 monitoring, infrastructure management
@@ -362,7 +367,14 @@ Target metrics:
 
 ## Support
 
-For questions or support, contact: support@143it.com
+For questions or support:
+- **Email:** support@143it.com
+- **Phone:** +1 (720) 292-6098
+- **Location:** Remote-First, Serving USA and CA
+
+**Social Media:**
+- **GitHub:** [github.com/iloveyouit](https://github.com/iloveyouit)
+- **LinkedIn:** [linkedin.com/in/rob-loftin-143it](https://www.linkedin.com/in/rob-loftin-143it)
 
 ---
 

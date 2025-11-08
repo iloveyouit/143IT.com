@@ -1,24 +1,29 @@
 # 143IT Website - Project Status
 
-**Last Updated:** October 2025
-**Version:** 1.1.0
+**Last Updated:** January 2025
+**Version:** 1.1.1
 **Status:** ✅ Production Ready with Docker Deployment
 
 ## Brand Identity
 
 - **Company:** 143IT (I Love You IT)
-- **Tagline:** "Automate. Evolve. Dominate."
+- **Tagline:** "Automate & Dominate with AI"
 - **Slogan:** "Next-Gen IT Management with Cloud, Automation, and AI at the Core."
 - **Theme:** High-tech dark mode with neon blue accents
 
 ## Completed Features
 
-### ✅ Core Pages (8 pages)
+### ✅ Core Pages (11 pages)
 - [x] Home page with animated hero
 - [x] Services overview
 - [x] Blog listing
 - [x] About page
 - [x] Contact page with form
+- [x] Case Studies page (`/case-studies`)
+- [x] Resources page (`/resources`)
+- [x] Privacy Policy page (`/legal/privacy`)
+- [x] Terms of Service page (`/legal/terms`)
+- [x] Pricing page (`/pricing`)
 
 ### ✅ Service Detail Pages (5 pages)
 - [x] Managed IT (`/services/managed-it`)
@@ -78,23 +83,28 @@
 
 ## Page Count & Routes
 
-**Total Pages:** 15
+**Total Pages:** 18
 
-### Static Pages (13)
+### Static Pages (16)
 1. `/` - Home
 2. `/services` - Services overview
 3. `/blog` - Blog listing
 4. `/about` - About
 5. `/contact` - Contact
-6. `/services/managed-it`
-7. `/services/cloud-modernization`
-8. `/services/automation-devops`
-9. `/services/ai-integration`
-10. `/services/security-compliance`
+6. `/pricing` - Pricing
+7. `/case-studies` - Case Studies
+8. `/resources` - Resources
+9. `/legal/privacy` - Privacy Policy
+10. `/legal/terms` - Terms of Service
+11. `/services/managed-it`
+12. `/services/cloud-modernization`
+13. `/services/automation-devops`
+14. `/services/ai-integration`
+15. `/services/security-compliance`
 
 ### Blog Articles (2)
-11. `/blog/infrastructure-as-code-guide-2024`
-12. `/blog/self-healing-infrastructure`
+16. `/blog/infrastructure-as-code-guide-2024`
+17. `/blog/self-healing-infrastructure`
 
 ## Performance Metrics
 
@@ -131,8 +141,16 @@ npm run docker:run
 ### Deployment Tested On
 - ✅ Local Docker Desktop (macOS)
 - ✅ Production build verified
-- ✅ All 15 pages accessible
+- ✅ All 18 pages accessible
 - ✅ HTTP endpoint responsive
+
+## Contact Information
+
+- **Email:** support@143it.com
+- **Phone:** +1 (720) 292-6098
+- **Location:** Remote-First, Serving USA and CA
+- **GitHub:** https://github.com/iloveyouit
+- **LinkedIn:** https://www.linkedin.com/in/rob-loftin-143it
 
 ## Known Integration Points
 
@@ -145,14 +163,12 @@ npm run docker:run
 ### Placeholders to Replace
 - Author avatars (currently using default icons)
 - Case study metrics (placeholder data)
-- Social media links in footer
-- Email address in footer/contact
 
 ## File Organization
 
 ```
-📦 143IT.com (15 pages, 21 components, Docker ready)
-├── 📄 13 static pages
+📦 143IT.com (18 pages, 21 components, Docker ready)
+├── 📄 16 static pages
 ├── 📄 2 MDX blog articles
 ├── 🎨 21 React components
 ├── 📋 Configuration files
@@ -272,6 +288,14 @@ npm run docker:compose:logs       # View Compose logs
 
 ## Version History
 
+- **v1.1.1** (January 2025) - Content and branding updates
+  - Added Resources, Privacy Policy, and Terms of Service pages
+  - Updated tagline to "Automate & Dominate with AI"
+  - Updated contact information (email, phone, location)
+  - Added social media links (GitHub, LinkedIn)
+  - Fixed broken footer links
+  - Improved accessibility with ARIA labels
+
 - **v1.1.0** (October 2025) - Docker deployment release
   - Docker multi-stage build configuration
   - Docker Compose setup
@@ -295,10 +319,12 @@ npm run docker:compose:logs       # View Compose logs
 🎉 **Project Status: Production Ready with Docker Deployment**
 
 The 143IT website is fully functional with:
-- 15 complete pages (all statically pre-rendered)
+- 18 complete pages (all statically pre-rendered)
 - Professional animations with Framer Motion
 - Rich MDX blog with syntax highlighting
 - Comprehensive service pages
+- Legal pages (Privacy Policy, Terms of Service)
+- Resources page with guides and tools
 - SEO optimization
 - Mobile responsive design
 - **Docker containerization (~150MB optimized image)**
@@ -308,7 +334,7 @@ The 143IT website is fully functional with:
 **Docker Deployment Verified:**
 - ✅ Build time: ~14 seconds
 - ✅ Image size: ~150MB
-- ✅ All 15 pages accessible
+- ✅ All 18 pages accessible
 - ✅ Production optimized
 - ✅ Security hardened (non-root user)
 
@@ -321,4 +347,4 @@ The 143IT website is fully functional with:
 
 ---
 
-**Built with ❤️ by 143IT** | Automate. Evolve. Dominate.
+**Built with ❤️ by 143IT** | Automate & Dominate with AI

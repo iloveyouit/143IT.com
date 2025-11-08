@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-**Tagline:** "Automate. Evolve. Dominate."
+**Tagline:** "Automate & Dominate with AI"
 **Version:** 1.1.0 (Docker Ready)
 
 ## Development Setup

@@ -1,0 +1,17 @@
+# robots.txt for 143IT Website
+# https://www.robotstxt.org/
+
+User-agent: *
+Allow: /
+
+# Disallow admin and API routes (if any)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://143it.com/sitemap.xml
+
+# Crawl-delay (optional, adjust as needed)
+# Crawl-delay: 1
+
