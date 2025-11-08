@@ -20,16 +20,16 @@ export default function Footer() {
 
             {/* Social Links */}
             <div className="flex space-x-4 mt-6">
-              <a href="#" className="text-text hover:text-accent-1 transition-colors">
+              <a href="https://www.linkedin.com/in/rob-loftin-143it" target="_blank" rel="noopener noreferrer" className="text-text hover:text-accent-1 transition-colors" aria-label="LinkedIn">
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="#" className="text-text hover:text-accent-1 transition-colors">
+              <a href="#" className="text-text hover:text-accent-1 transition-colors" aria-label="Twitter">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-text hover:text-accent-1 transition-colors">
+              <a href="https://github.com/iloveyouit" target="_blank" rel="noopener noreferrer" className="text-text hover:text-accent-1 transition-colors" aria-label="GitHub">
                 <Github className="h-5 w-5" />
               </a>
-              <a href="mailto:hello@143it.com" className="text-text hover:text-accent-1 transition-colors">
+              <a href="mailto:support@143it.com" className="text-text hover:text-accent-1 transition-colors" aria-label="Email">
                 <Mail className="h-5 w-5" />
               </a>
             </div>

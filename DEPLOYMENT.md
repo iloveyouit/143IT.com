@@ -681,7 +681,7 @@ Before going live:
 ## Support
 
 For deployment assistance:
-- Email: hello@143it.com
+- Email: support@143it.com
 - Documentation: This file
 - GitHub Issues: [Repository issues](https://github.com/yourusername/143IT.com/issues)
 
