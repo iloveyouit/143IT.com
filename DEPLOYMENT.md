@@ -74,6 +74,28 @@ docker rm 143it-web
 - **Standalone output** - Includes only production dependencies
 - **Alpine Linux** - Lightweight base image
 
+### Important: Standalone Output Configuration
+
+This project is configured with `output: 'standalone'` in `next.config.mjs` for optimized Docker deployment. This has implications for local testing:
+
+**What this means:**
+- ✅ **Docker deployment**: Fully optimized and recommended
+- ✅ **Development mode** (`npm run dev`): Works perfectly
+- ⚠️ **Local production mode** (`npm start`): Shows a warning but still works
+
+**The Warning You'll See:**
+```
+⚠ "next start" does not work with "output: standalone" configuration.
+Use "node .next/standalone/server.js" instead.
+```
+
+**Recommended Approaches:**
+
+1. **For development/testing**: Use `npm run dev`
+2. **For Docker deployment**: Use `docker-compose up` (recommended)
+3. **For local production testing**: Use `node .next/standalone/server.js`
+4. **To use `npm start`**: Temporarily remove `output: 'standalone'` from `next.config.mjs`
+
 ### Production Deployment with Docker
 
 #### Option 1: VPS with Docker

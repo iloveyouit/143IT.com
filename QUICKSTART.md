@@ -1,31 +1,75 @@
 # Quick Start Guide
 
 **Tagline:** "Automate & Dominate with AI"
-**Version:** 1.1.0 (Docker Ready)
+**Version:** 1.2.0 (AI Chatbot Integrated)
 
 ## Development Setup
+
+### Prerequisites
+
+- Node.js 18+ installed
+- npm or yarn package manager
+- OpenAI API key (for chatbot functionality)
+
+### Environment Configuration
+
+**IMPORTANT:** Before running the application, set up your environment variables:
+
+```bash
+# 1. Copy the example environment file
+cp .env.example .env.local
+
+# 2. Edit .env.local and add your OpenAI API key
+# Get your API key from: https://platform.openai.com/api-keys
+OPENAI_API_KEY=your_actual_api_key_here
+```
 
 ### Local Development
 
 ```bash
-# Install dependencies
+# 1. Install dependencies (REQUIRED - run this first!)
 npm install
 
-# Run development server
+# 2. Set up environment variables (see above)
+# Make sure .env.local exists with your OPENAI_API_KEY
+
+# 3. Run development server
 npm run dev
 ```
 
 Visit **http://localhost:3000** to see the site.
 
-### Production Build (Local)
+**Development Features:**
+- Hot reload enabled
+- Fast refresh for React components
+- Detailed error messages
+- Source maps for debugging
 
+### Production Build (Local Testing)
+
+**Note:** This project uses `output: 'standalone'` configuration optimized for Docker deployment. For local production testing, you have two options:
+
+**Option 1: Use development mode (Recommended for local testing)**
 ```bash
-# Create production build
+npm run dev
+```
+
+**Option 2: Production build with standalone server**
+```bash
+# 1. Build the application
 npm run build
 
-# Run production server
-npm start
+# 2. Run using standalone server (NOT npm start)
+node .next/standalone/server.js
 ```
+
+**Why not `npm start`?**
+The `npm start` command doesn't work properly with the standalone output configuration. You'll see this warning:
+```
+⚠ "next start" does not work with "output: standalone" configuration.
+```
+
+For actual production deployment, use Docker (see below).
 
 ## Docker Deployment
 

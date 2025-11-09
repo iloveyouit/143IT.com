@@ -1,8 +1,8 @@
 # 143IT Website - Project Status
 
 **Last Updated:** January 2025
-**Version:** 1.1.1
-**Status:** ✅ Production Ready with Docker Deployment
+**Version:** 1.2.0
+**Status:** ✅ Production Ready with AI Chatbot & Docker Deployment
 
 ## Brand Identity
 
@@ -13,12 +13,22 @@
 
 ## Completed Features
 
+### ✅ AI Integration (NEW in v1.2.0)
+- [x] AI Chatbot Widget with OpenAI integration
+- [x] Floating chat interface with Framer Motion animations
+- [x] Context-aware responses about 143IT services
+- [x] Lead qualification capabilities
+- [x] Session-based chat history
+- [x] Mobile responsive chat UI
+- [x] Error handling and fallback messages
+- [x] GPT-4 Turbo powered responses
+
 ### ✅ Core Pages (11 pages)
 - [x] Home page with animated hero
 - [x] Services overview
 - [x] Blog listing
 - [x] About page
-- [x] Contact page with form
+- [x] Contact page with form (⚠️ pending n8n integration)
 - [x] Case Studies page (`/case-studies`)
 - [x] Resources page (`/resources`)
 - [x] Privacy Policy page (`/legal/privacy`)
@@ -152,17 +162,39 @@ npm run docker:run
 - **GitHub:** https://github.com/iloveyouit
 - **LinkedIn:** https://www.linkedin.com/in/rob-loftin-143it
 
-## Known Integration Points
+## ⚠️ Known Issues & Pending Features
 
-### Ready for Integration
-1. **Contact Form** → n8n webhook (placeholder in `app/contact/page.tsx:31`)
-2. **Newsletter** → n8n webhook (placeholder in `components/Newsletter.tsx:15`)
-3. **Analytics** → Add Fathom/Plausible tracking code
-4. **Blog CMS** → Connect to Notion API/Ghost/WordPress
+### Critical (Must Fix Before Production)
+1. **Contact Form NOT Functional**
+   - **Location**: `app/contact/page.tsx:21-35`
+   - **Issue**: Form submission is mocked with setTimeout, not actually sending data
+   - **Status**: TODO comment indicates n8n webhook integration pending
+   - **Impact**: Users see success message but data goes nowhere
+   - **Action Required**: Implement actual webhook POST to n8n
+
+2. **OpenAI API Key Security**
+   - **Location**: `.env.local`
+   - **Recommendation**: Rotate API key before production deployment
+   - **Add**: Rate limiting to `/api/chat` endpoint to prevent abuse
+
+3. **Image Remote Patterns Too Permissive**
+   - **Location**: `next.config.mjs:26`
+   - **Issue**: Wildcard hostname (`**`) allows ALL external images
+   - **Risk**: Potential SSRF vulnerability
+   - **Fix**: Restrict to specific trusted domains
+
+### Integration Points Ready for Setup
+1. **Newsletter** → n8n webhook (placeholder in `components/Newsletter.tsx:15`)
+2. **Analytics** → Add Fathom/Plausible tracking code
+3. **Blog CMS** → Connect to Notion API/Ghost/WordPress
 
 ### Placeholders to Replace
 - Author avatars (currently using default icons)
 - Case study metrics (placeholder data)
+
+### Configuration Notes
+- **npm start warning**: Shows warning due to `output: 'standalone'` config, but works. Use `npm run dev` for development or Docker for production.
+- **Environment Setup**: Must copy `.env.example` to `.env.local` and add OpenAI API key before running
 
 ## File Organization
 
@@ -287,6 +319,18 @@ npm run docker:compose:logs       # View Compose logs
 - Azure Static Web Apps
 
 ## Version History
+
+- **v1.2.0** (January 2025) - AI Chatbot Integration
+  - Added OpenAI-powered AI chatbot widget
+  - Floating chat interface with Framer Motion animations
+  - Context-aware responses about 143IT services
+  - Lead qualification capabilities
+  - Session-based chat history
+  - Mobile responsive chat UI
+  - GPT-4 Turbo integration
+  - API route with error handling
+  - Updated documentation with environment setup instructions
+  - Added .env.example file
 
 - **v1.1.1** (January 2025) - Content and branding updates
   - Added Resources, Privacy Policy, and Terms of Service pages

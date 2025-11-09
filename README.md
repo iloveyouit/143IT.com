@@ -167,9 +167,9 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment documentation.
 ### Available Scripts
 
 **Development:**
-- `npm run dev` - Start development server
+- `npm run dev` - Start development server (recommended for local development)
 - `npm run build` - Build for production
-- `npm start` - Start production server
+- `npm start` - Start production server ⚠️ **Note:** Not compatible with standalone output config. Use `node .next/standalone/server.js` or Docker instead
 - `npm run lint` - Run ESLint
 
 **Docker:**
@@ -183,6 +183,16 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment documentation.
 
 **Testing:**
 - `./docker-test.sh` - Run automated Docker deployment test
+
+### Important Notes
+
+**Production Testing Locally:**
+This project uses `output: 'standalone'` configuration for optimized Docker deployment. This means:
+- ✅ **For development**: Use `npm run dev`
+- ✅ **For Docker deployment**: Use `docker-compose up` or Docker scripts
+- ⚠️ **For local production testing**: Use `node .next/standalone/server.js` (NOT `npm start`)
+
+The `npm start` command will show a warning but still work. For proper production testing, use Docker.
 
 ## Design System
 
@@ -328,20 +338,35 @@ The chatbot's knowledge and behavior can be customized in `app/api/chat/route.ts
 
 ## Integrations
 
-### n8n Contact Form
+### ⚠️ Known Issues & Pending Features
 
-The contact form is ready for n8n webhook integration:
+**Contact Form (Pending Integration)**
+- **Status**: Not functional - form submission is currently mocked
+- **Location**: `app/contact/page.tsx:21-35`
+- **Issue**: TODO comment indicates n8n webhook integration is pending
+- **Impact**: Users will see a success message, but form data is not sent anywhere
+- **Action Required**: Implement n8n webhook integration before production deployment
+
+**Newsletter Signup (Pending Integration)**
+- **Status**: Ready for integration but not connected
+- **Location**: `components/Newsletter.tsx`
+- **Action Required**: Connect to email marketing platform via n8n
+
+### n8n Contact Form Integration (TODO)
+
+When implementing the contact form:
 
 1. Create an n8n workflow with a webhook trigger
-2. Update the form submission handler in `app/contact/page.tsx`
-3. Replace the TODO comment with your webhook URL
+2. Update the form submission handler in `app/contact/page.tsx:21-35`
+3. Replace the setTimeout mock with actual webhook POST request
+4. Add proper error handling and validation
 
-Example workflow:
+Example n8n workflow:
 ```
 Webhook → Data Validation → CRM (Create Contact) → Email → Slack Notification
 ```
 
-### Newsletter Automation
+### Newsletter Automation (TODO)
 
 Newsletter form in `components/Newsletter.tsx` is ready for integration:
 
