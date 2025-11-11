@@ -4,6 +4,7 @@ import Link from "next/link";
 import AuthorInfo from "./AuthorInfo";
 import RelatedPosts from "./RelatedPosts";
 import TableOfContents from "./TableOfContents";
+import StructuredData from "./StructuredData";
 
 interface BlogArticleLayoutProps {
   children: ReactNode;
@@ -17,6 +18,8 @@ interface BlogArticleLayoutProps {
   };
   tags: string[];
   category: string;
+  href?: string;
+  excerpt?: string;
   relatedPosts?: Array<{
     title: string;
     excerpt: string;
@@ -33,10 +36,43 @@ export default function BlogArticleLayout({
   author,
   tags,
   category,
+  href,
+  excerpt,
   relatedPosts = [],
 }: BlogArticleLayoutProps) {
+  const baseUrl = "https://143it.com";
+  const articleUrl = href ? `${baseUrl}${href}` : `${baseUrl}/blog/${title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+  
+  // Generate BlogPosting structured data
+  const blogPostingData = {
+    headline: title,
+    description: excerpt || title,
+    datePublished: date,
+    dateModified: date,
+    author: {
+      "@type": "Person",
+      name: author.name,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "143IT",
+      logo: {
+        "@type": "ImageObject",
+        url: `${baseUrl}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": articleUrl,
+    },
+    keywords: tags.join(", "),
+    articleSection: category,
+  };
+
   return (
-    <div className="pt-24 pb-20">
+    <>
+      <StructuredData type="BlogPosting" data={blogPostingData} />
+      <div className="pt-24 pb-20">
       {/* Header */}
       <section className="py-12 px-6 bg-gradient-to-b from-accent-1/5 to-transparent">
         <div className="container mx-auto max-w-4xl">
@@ -139,5 +175,6 @@ export default function BlogArticleLayout({
         </div>
       </section>
     </div>
+    </>
   );
 }

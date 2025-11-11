@@ -6,12 +6,14 @@ interface StructuredDataProps {
 }
 
 export default function StructuredData({ type = "Organization", data }: StructuredDataProps) {
+  const baseUrl = "https://143it.com";
+  
   const baseOrganization = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "143IT",
-    url: "https://143it.com",
-    logo: "https://143it.com/logo.png", // Update with actual logo URL
+    url: baseUrl,
+    logo: `${baseUrl}/logo.png`, // Update with actual logo URL
     description: "Next-Gen IT Management with Cloud, Automation, and AI at the Core.",
     contactPoint: {
       "@type": "ContactPoint",
@@ -30,7 +32,7 @@ export default function StructuredData({ type = "Organization", data }: Structur
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "143IT",
-    url: "https://143it.com",
+    url: baseUrl,
     description: "Automate & Dominate with AI - Next-Gen IT Management Services",
     publisher: {
       "@type": "Organization",
@@ -46,6 +48,34 @@ export default function StructuredData({ type = "Organization", data }: Structur
       break;
     case "WebSite":
       structuredData = { ...website, ...data };
+      break;
+    case "BlogPosting":
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        publisher: {
+          "@type": "Organization",
+          name: "143IT",
+          logo: {
+            "@type": "ImageObject",
+            url: `${baseUrl}/logo.png`,
+          },
+        },
+        ...data,
+      };
+      break;
+    case "Service":
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        provider: {
+          "@type": "Organization",
+          name: "143IT",
+          url: baseUrl,
+        },
+        serviceType: "IT Management Services",
+        ...data,
+      };
       break;
     default:
       structuredData = data || baseOrganization;

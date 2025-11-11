@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { Database, CheckCircle2, Clock, Shield, Zap, ArrowRight, TrendingUp } from "lucide-react";
 import type { Metadata } from "next";
+import { generateMetadata as genMeta } from "@/lib/metadata";
+import StructuredData from "@/components/StructuredData";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = genMeta({
   title: "Managed IT Infrastructure Services | 143IT",
   description: "Enterprise-grade management of Windows, VMware, Azure, and M365 environments with 24/7 monitoring and proactive support.",
-};
+  path: "/services/managed-it",
+});
 
 export default function ManagedITPage() {
   const features = [
@@ -67,7 +70,23 @@ export default function ManagedITPage() {
   ];
 
   return (
-    <div className="pt-24">
+    <>
+      <StructuredData
+        type="Service"
+        data={{
+          name: "Managed IT Infrastructure Services",
+          description: "Enterprise-grade management of Windows, VMware, Azure, and M365 environments with 24/7 monitoring and proactive support.",
+          url: "https://143it.com/services/managed-it",
+          areaServed: ["US", "CA"],
+          serviceType: "IT Infrastructure Management",
+          offers: {
+            "@type": "Offer",
+            name: "Managed IT Infrastructure",
+            description: "24/7 monitoring, proactive maintenance, and expert support for your IT infrastructure.",
+          },
+        }}
+      />
+      <div className="pt-24">
       {/* Hero Section */}
       <section className="py-20 px-6 bg-gradient-to-b from-accent-1/5 to-transparent">
         <div className="container mx-auto max-w-5xl">
@@ -189,5 +208,6 @@ export default function ManagedITPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

@@ -2,6 +2,74 @@
 
 All notable changes to the 143IT website will be documented in this file.
 
+## [1.3.0] - 2025-01-XX
+
+### Added
+- **SEO Enhancements**:
+  - Comprehensive metadata utility (`lib/metadata.ts`) for generating Open Graph, Twitter Cards, and canonical URLs
+  - Open Graph images support across all pages
+  - Canonical URLs for all pages to prevent duplicate content issues
+  - Enhanced structured data (JSON-LD) support:
+    - BlogPosting schema for blog articles
+    - Service schema for service pages
+    - Improved Organization and WebSite schemas
+  - Twitter Card metadata for better social media sharing
+  - Blog layout component (`app/blog/layout.tsx`) for proper metadata handling
+
+- **Blog Functionality**:
+  - Real-time search functionality on blog page
+    - Search across titles, excerpts, and categories
+    - Instant filtering as you type
+    - Proper ARIA labels for accessibility
+  - Category filtering system
+    - Clickable category buttons with active state
+    - "All Posts" option to clear filters
+    - Combined search and category filtering
+  - Enhanced UX features:
+    - Result count display when filters are active
+    - "Clear filters" button
+    - Empty state message when no results found
+    - Featured post hidden when filters are active
+    - Improved accessibility with proper ARIA attributes
+
+### Changed
+- **Blog Page** (`app/blog/page.tsx`):
+  - Converted to client component for interactive search/filter functionality
+  - Improved state management with React hooks
+  - Enhanced user experience with real-time filtering
+
+- **BlogArticleLayout Component**:
+  - Added BlogPosting structured data generation
+  - Added support for `href` and `excerpt` props for better SEO
+  - Automatic JSON-LD schema generation for blog posts
+
+- **StructuredData Component**:
+  - Enhanced to support BlogPosting and Service types
+  - Improved base URL handling for consistency
+  - Better schema.org compliance
+
+- **Service Pages**:
+  - Updated Managed IT page with Service structured data
+  - Integrated new metadata utility for canonical URLs and Open Graph
+
+### Technical Details
+- Created reusable metadata utility functions
+- Improved SEO best practices implementation
+- Enhanced accessibility with proper ARIA labels
+- Better code organization with utility functions
+
+### Files Added
+- `lib/metadata.ts` - Metadata generation utility
+- `app/blog/layout.tsx` - Blog layout for metadata handling
+
+### Files Modified
+- `app/blog/page.tsx` - Added search and filter functionality
+- `components/BlogArticleLayout.tsx` - Added structured data support
+- `components/StructuredData.tsx` - Enhanced with BlogPosting and Service types
+- `app/services/managed-it/page.tsx` - Added Service structured data
+- `app/blog/infrastructure-as-code-guide-2024/page.mdx` - Added href and excerpt props
+- `app/blog/self-healing-infrastructure/page.mdx` - Added href and excerpt props
+
 ## [1.2.0] - 2025-11-08
 
 ### Added

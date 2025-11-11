@@ -1,6 +1,6 @@
 {
   "name": "143it-website",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Modern MSP website with Next.js 14, AI Chatbot, MDX blog, Framer Motion animations, and Docker deployment. Automate & Dominate with AI",
   "author": "143IT",
   "private": true,
