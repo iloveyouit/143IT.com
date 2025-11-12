@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Force dynamic rendering - don't evaluate at build time
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 // System prompt with 143IT context
 const SYSTEM_PROMPT = `You are an AI assistant for 143IT, a Managed Service Provider (MSP) specializing in automation, cloud modernization, and AI-powered infrastructure solutions.
@@ -78,6 +78,11 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+
+    // Initialize OpenAI client (lazy initialization to avoid build-time errors)
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     // Call OpenAI API
     const completion = await openai.chat.completions.create({

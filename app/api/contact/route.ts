@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server';
 
+// Force dynamic rendering - don't evaluate at build time
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // Simple rate limiting (in-memory, for demo - use Redis in production)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
