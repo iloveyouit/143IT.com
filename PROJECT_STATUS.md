@@ -9,7 +9,7 @@
 - **Company:** 143IT (I Love You IT)
 - **Tagline:** "Automate & Dominate with AI"
 - **Slogan:** "Next-Gen IT Management with Cloud, Automation, and AI at the Core."
-- **Theme:** High-tech dark mode with neon blue accents
+- **Theme:** Premium dark mode with gold and blue accents
 
 ## Completed Features
 

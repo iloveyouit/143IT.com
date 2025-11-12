@@ -13,26 +13,52 @@ export default function ContactPage() {
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
+    setErrorMessage("");
 
-    // TODO: Integrate with n8n webhook
-    // Simulating API call
-    setTimeout(() => {
-      setStatus("success");
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        phone: "",
-        service: "",
-        message: "",
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setStatus("success");
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          phone: "",
+          service: "",
+          message: "",
+        });
+
+        // Reset to idle after 5 seconds
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+        setErrorMessage(data.error || "Failed to send message. Please try again.");
+        
+        // Reset to idle after 5 seconds
+        setTimeout(() => setStatus("idle"), 5000);
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setStatus("error");
+      setErrorMessage("Failed to send message. Please try again or email us directly at support@143it.com");
+      
+      // Reset to idle after 5 seconds
       setTimeout(() => setStatus("idle"), 5000);
-    }, 1000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -137,6 +163,24 @@ export default function ContactPage() {
                     <p className="text-text/80">
                       Thank you for contacting us. We'll get back to you soon.
                     </p>
+                  </div>
+                ) : status === "error" ? (
+                  <div className="text-center py-12">
+                    <div className="bg-red-500/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Mail className="h-10 w-10 text-red-500" />
+                    </div>
+                    <h3 className="text-2xl font-heading font-bold mb-3 text-red-500">
+                      Something Went Wrong
+                    </h3>
+                    <p className="text-text/80 mb-4">
+                      {errorMessage}
+                    </p>
+                    <button
+                      onClick={() => setStatus("idle")}
+                      className="btn-secondary"
+                    >
+                      Try Again
+                    </button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">

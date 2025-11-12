@@ -209,11 +209,11 @@ The `npm start` command will show a warning but still work. For proper productio
 
 ### Colors
 
-- **Background**: `#0B0F1A`
-- **Primary Accent**: `#00E0FF` (Neon Blue)
-- **Secondary Accent**: `#1E90FF` (Dodger Blue)
+- **Background**: `#0B0F14` (Dark Blue-Gray)
+- **Primary Accent**: `#F59E0B` (Gold)
+- **Secondary Accent**: `#3B82F6` (Blue)
 - **Text**: `#E0E0E0`
-- **CTA Hover**: `#00A8E8`
+- **CTA Hover**: `#FBBF24` (Light Gold)
 
 ### Typography
 
