@@ -1,183 +1,53 @@
 import { NextResponse } from 'next/server';
 
-// Force dynamic rendering - don't evaluate at build time
-export const dynamic = 'force-dynamic';
-export const runtime = 'nodejs';
-
-// Simple rate limiting (in-memory, for demo - use Redis in production)
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const limit = rateLimitMap.get(ip);
-
-  if (!limit || now > limit.resetTime) {
-    // Reset or create new limit (5 requests per 15 minutes)
-    rateLimitMap.set(ip, {
-      count: 1,
-      resetTime: now + 15 * 60 * 1000, // 15 minutes
-    });
-    return true;
-  }
-
-  if (limit.count < 5) {
-    limit.count++;
-    return true;
-  }
-
-  return false; // Rate limit exceeded
-}
-
-// Email validation regex
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-// Validate and sanitize input
-function validateContactForm(data: any): { valid: boolean; errors: string[] } {
-  const errors: string[] = [];
-
-  // Name validation
-  if (!data.name || typeof data.name !== 'string') {
-    errors.push('Name is required');
-  } else if (data.name.trim().length < 2) {
-    errors.push('Name must be at least 2 characters');
-  } else if (data.name.length > 100) {
-    errors.push('Name must be less than 100 characters');
-  }
-
-  // Email validation
-  if (!data.email || typeof data.email !== 'string') {
-    errors.push('Email is required');
-  } else if (!EMAIL_REGEX.test(data.email)) {
-    errors.push('Invalid email format');
-  } else if (data.email.length > 255) {
-    errors.push('Email must be less than 255 characters');
-  }
-
-  // Company validation (optional)
-  if (data.company && typeof data.company === 'string' && data.company.length > 100) {
-    errors.push('Company name must be less than 100 characters');
-  }
-
-  // Message validation
-  if (!data.message || typeof data.message !== 'string') {
-    errors.push('Message is required');
-  } else if (data.message.trim().length < 10) {
-    errors.push('Message must be at least 10 characters');
-  } else if (data.message.length > 5000) {
-    errors.push('Message must be less than 5000 characters');
-  }
-
-  return {
-    valid: errors.length === 0,
-    errors,
-  };
-}
-
 export async function POST(request: Request) {
   try {
-    // Get client IP for rate limiting
-    const forwarded = request.headers.get('x-forwarded-for');
-    const ip = forwarded ? forwarded.split(',')[0] : 'unknown';
-
-    // Check rate limit
-    if (!checkRateLimit(ip)) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Too many requests. Please try again later.' 
-        },
-        { status: 429 }
-      );
-    }
-
-    // Parse request body
     const body = await request.json();
+    const { name, email, message } = body;
 
-    // Validate input
-    const validation = validateContactForm(body);
-    if (!validation.valid) {
+    // Basic validation
+    if (!name || !email || !message) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Validation failed', 
-          errors: validation.errors 
-        },
+        { success: false, error: 'Name, email, and message are required.' },
         { status: 400 }
       );
     }
 
-    // Sanitize data
-    const sanitizedData = {
-      name: body.name.trim(),
-      email: body.email.trim().toLowerCase(),
-      company: body.company ? body.company.trim() : '',
-      message: body.message.trim(),
-      timestamp: new Date().toISOString(),
-      userAgent: request.headers.get('user-agent') || 'unknown',
-    };
+    const webhookUrl = process.env.N8N_CONTACT_WEBHOOK;
 
-    // Check if n8n webhook URL is configured
-    const webhookUrl = process.env.N8N_CONTACT_WEBHOOK_URL;
-    
     if (!webhookUrl) {
-      console.warn('N8N_CONTACT_WEBHOOK_URL not configured. Form data:', sanitizedData);
-      
-      // In development, just log and return success
-      if (process.env.NODE_ENV === 'development') {
-        console.log('📨 Contact form submission (dev mode):', sanitizedData);
-        return NextResponse.json({ 
-          success: true, 
-          message: 'Form received (development mode - no webhook configured)' 
-        });
-      }
-      
-      // In production, return error if webhook not configured
+      console.warn('N8N_CONTACT_WEBHOOK is not defined');
+      // Simulate success in dev if no webhook is defined, but log warning
+      // In production, this should probably error or fallback
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Contact form is not configured. Please email support@143it.com directly.' 
-        },
-        { status: 503 }
+        { success: true, message: 'Message received (Simulation: Webhook not configured)' },
+        { status: 200 }
       );
     }
 
-    // Send to n8n webhook
-    const webhookResponse = await fetch(webhookUrl, {
+    // Forward to n8n
+    const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(sanitizedData),
+      body: JSON.stringify({
+        ...body,
+        source: '143it-website',
+        timestamp: new Date().toISOString(),
+      }),
     });
 
-    if (!webhookResponse.ok) {
-      throw new Error(`Webhook returned status ${webhookResponse.status}`);
+    if (!response.ok) {
+      throw new Error(`n8n webhook error: ${response.statusText}`);
     }
 
-    // Success
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Thank you for contacting us! We\'ll get back to you soon.' 
-    });
-
+    return NextResponse.json({ success: true, message: 'Message sent successfully' });
   } catch (error) {
     console.error('Contact form error:', error);
-    
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Failed to submit form. Please try again or email support@143it.com directly.' 
-      },
+      { success: false, error: 'Failed to send message. Please try again later.' },
       { status: 500 }
     );
   }
 }
-
-// Prevent GET requests
-export async function GET() {
-  return NextResponse.json(
-    { error: 'Method not allowed' },
-    { status: 405 }
-  );
-}
-

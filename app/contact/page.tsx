@@ -47,7 +47,7 @@ export default function ContactPage() {
       } else {
         setStatus("error");
         setErrorMessage(data.error || "Failed to send message. Please try again.");
-        
+
         // Reset to idle after 5 seconds
         setTimeout(() => setStatus("idle"), 5000);
       }
@@ -55,7 +55,7 @@ export default function ContactPage() {
       console.error("Form submission error:", error);
       setStatus("error");
       setErrorMessage("Failed to send message. Please try again or email us directly at support@143it.com");
-      
+
       // Reset to idle after 5 seconds
       setTimeout(() => setStatus("idle"), 5000);
     }
