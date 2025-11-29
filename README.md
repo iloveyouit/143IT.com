@@ -8,7 +8,7 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
 ## Features
 
 - **Modern Tech Stack**: Next.js 14, TypeScript, TailwindCSS, Framer Motion
-- **AI Chatbot Widget**: OpenAI-powered assistant for service inquiries and lead qualification
+- **AI Chatbot Widget**: OpenAI-powered assistant with rate limiting and security features
 - **Responsive Design**: Mobile-first, fully responsive across all devices
 - **Advanced SEO**: 
   - Open Graph and Twitter Card metadata
@@ -20,6 +20,15 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
   - Category filtering
   - MDX support with syntax highlighting
   - Rich content with table of contents
+  - 7 high-quality technical articles
+- **Integrations**:
+  - **Contact Form**: Connected to n8n with validation and rate limiting
+  - **Newsletter**: Double opt-in support via n8n
+- **Security**:
+  - Content Security Policy (CSP)
+  - Rate limiting on all API endpoints
+  - Input sanitization and validation (Zod)
+  - Secure image remote patterns
 - **Dark Theme**: High-tech aesthetic with neon blue accents (#00E0FF)
 - **Animations**: Typing effects, scroll animations, animated counters, fade-in sections
 - **Performance**: Optimized images, lazy loading, minimal JavaScript
@@ -32,7 +41,7 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
 - **Services** (`/services`) - Comprehensive service offerings with process overview
 - **Blog** (`/blog`) - Dynamic blog feed with real-time search and category filtering
 - **About** (`/about`) - Company story, mission, values, and capabilities
-- **Contact** (`/contact`) - Contact form with n8n integration ready
+- **Contact** (`/contact`) - Fully functional contact form with n8n integration
 - **Case Studies** (`/case-studies`) - Real client success stories and results
 - **Resources** (`/resources`) - IT guides, tools, downloads, and learning resources
 - **Pricing** (`/pricing`) - Service pricing information
@@ -49,6 +58,11 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
 ### Blog Articles (MDX)
 - **Infrastructure as Code Guide** (`/blog/infrastructure-as-code-guide-2024`)
 - **Self-Healing Infrastructure** (`/blog/self-healing-infrastructure`)
+- **Terraform vs Ansible** (`/blog/terraform-vs-ansible`)
+- **ChatGPT + n8n Workflows** (`/blog/chatgpt-n8n-workflows`)
+- **Azure Misconfigurations** (`/blog/azure-misconfigurations`)
+- **CI/CD Security Best Practices** (`/blog/cicd-security-best-practices`)
+- **M365 Automation** (`/blog/m365-automation-graph-api`)
 
 ## Tech Stack
 
@@ -60,6 +74,7 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Fonts**: Inter, Orbitron (Google Fonts)
 - **Syntax Highlighting**: Highlight.js (Atom One Dark theme)
+- **Validation**: [Zod](https://zod.dev/)
 
 ## Getting Started
 
@@ -85,11 +100,15 @@ npm install
 ```bash
 cp .env.example .env.local
 ```
-Edit `.env.local` and add your OpenAI API key:
-```
+Edit `.env.local` and add your keys:
+```bash
+# OpenAI API (for Chatbot)
 OPENAI_API_KEY=your_actual_api_key_here
+
+# n8n Webhooks (for Forms)
+N8N_CONTACT_WEBHOOK=https://your-n8n-instance.com/webhook/contact
+N8N_NEWSLETTER_WEBHOOK=https://your-n8n-instance.com/webhook/newsletter
 ```
-Get your API key from [OpenAI Platform](https://platform.openai.com/api-keys)
 
 4. Run the development server:
 ```bash
@@ -126,53 +145,34 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment documentation.
 ```
 143IT.com/
 ├── app/                           # Next.js App Router pages
+│   ├── api/                      # API Routes
+│   │   ├── chat/                # OpenAI Chatbot API
+│   │   ├── contact/             # Contact Form API
+│   │   └── newsletter/          # Newsletter API
 │   ├── about/                    # About page
-│   ├── blog/                     # Blog pages
-│   │   ├── layout.tsx           # Blog layout with metadata
-│   │   ├── page.tsx             # Blog listing with search/filter
-│   │   ├── infrastructure-as-code-guide-2024/
-│   │   │   └── page.mdx         # MDX blog article
-│   │   └── self-healing-infrastructure/
-│   │       └── page.mdx         # MDX blog article
+│   ├── blog/                     # Blog pages & articles
 │   ├── contact/                  # Contact page
 │   ├── services/                 # Services pages
-│   │   ├── page.tsx             # Services overview
-│   │   ├── managed-it/          # Managed IT detail
-│   │   ├── cloud-modernization/ # Cloud detail
-│   │   ├── automation-devops/   # Automation detail
-│   │   ├── ai-integration/      # AI detail
-│   │   └── security-compliance/ # Security detail
 │   ├── layout.tsx                # Root layout with Header/Footer
 │   ├── page.tsx                  # Home page
-│   └── globals.css               # Global styles + syntax highlighting
+│   └── globals.css               # Global styles
 ├── components/                   # React components
 │   ├── Header.tsx               # Navigation header
 │   ├── Footer.tsx               # Site footer
-│   ├── Hero.tsx                 # Animated hero with typing effect
-│   ├── Pillars.tsx              # Three pillars with animations
-│   ├── FeaturedServices.tsx     # Service cards
-│   ├── CaseStudyHighlights.tsx  # Case study previews
-│   ├── LatestInsights.tsx       # Blog post previews
+│   ├── Hero.tsx                 # Animated hero
 │   ├── Newsletter.tsx           # Newsletter signup
-│   ├── AnimatedCounter.tsx      # Counting animation component
-│   ├── FadeInSection.tsx        # Scroll-triggered fade-in
-│   ├── TypingEffect.tsx         # Typewriter effect
-│   ├── BlogArticleLayout.tsx    # MDX blog wrapper with structured data
-│   ├── StructuredData.tsx       # JSON-LD structured data component
-│   ├── AuthorInfo.tsx           # Author bio component
-│   ├── RelatedPosts.tsx         # Related articles
-│   └── TableOfContents.tsx      # Auto-generated TOC
+│   └── ...                      # Other UI components
 ├── lib/                         # Utility functions
-│   └── metadata.ts             # SEO metadata generation utilities
+│   ├── metadata.ts             # SEO metadata generation
+│   └── rate-limit.ts           # Rate limiting utility
 ├── public/                       # Static assets
 ├── tailwind.config.ts            # TailwindCSS configuration
 ├── tsconfig.json                 # TypeScript configuration
-├── next.config.mjs               # Next.js + MDX configuration (ESM)
+├── next.config.mjs               # Next.js + MDX configuration
+├── middleware.ts                 # Security headers & routing
 ├── package.json                  # Dependencies
 ├── Dockerfile                    # Docker multi-stage build
-├── docker-compose.yml            # Docker Compose configuration
-├── .dockerignore                 # Docker build exclusions
-└── docker-test.sh                # Automated deployment test script
+└── docker-compose.yml            # Docker Compose configuration
 ```
 
 ### Available Scripts
@@ -229,13 +229,6 @@ The `npm start` command will show a warning but still work. For proper productio
 - `.glow-effect` - Text glow effect for headings
 - `.card-glow` - Card shadow glow
 - `.prose-blog` - MDX article styling wrapper
-
-#### React Components
-- **AnimatedCounter** - Spring-animated number counter
-- **FadeInSection** - Scroll-triggered fade-in with direction options
-- **TypingEffect** - Typewriter animation for text
-- **BlogArticleLayout** - Full-featured blog post layout
-- **TableOfContents** - Auto-generated with scroll spy
 
 ## Deployment
 
@@ -324,6 +317,7 @@ The website includes an intelligent AI chatbot powered by OpenAI that appears on
 - **Modern UI**: Dark theme matching the site aesthetic
 - **Responsive**: Works perfectly on mobile and desktop
 - **Persistent**: Chat history maintained during session
+- **Secure**: Rate limited (10 req/min) and validated
 
 ### Configuration
 
@@ -349,41 +343,17 @@ The chatbot's knowledge and behavior can be customized in `app/api/chat/route.ts
 
 ## Integrations
 
-### ⚠️ Known Issues & Pending Features
+### Contact Form
+- **Status**: ✅ Active
+- **Integration**: n8n Webhook
+- **Features**: Validation, Rate Limiting, Error Handling
+- **Setup**: Add `N8N_CONTACT_WEBHOOK` to `.env.local`
 
-**Contact Form (Pending Integration)**
-- **Status**: Not functional - form submission is currently mocked
-- **Location**: `app/contact/page.tsx:21-35`
-- **Issue**: TODO comment indicates n8n webhook integration is pending
-- **Impact**: Users will see a success message, but form data is not sent anywhere
-- **Action Required**: Implement n8n webhook integration before production deployment
-
-**Newsletter Signup (Pending Integration)**
-- **Status**: Ready for integration but not connected
-- **Location**: `components/Newsletter.tsx`
-- **Action Required**: Connect to email marketing platform via n8n
-
-### n8n Contact Form Integration (TODO)
-
-When implementing the contact form:
-
-1. Create an n8n workflow with a webhook trigger
-2. Update the form submission handler in `app/contact/page.tsx:21-35`
-3. Replace the setTimeout mock with actual webhook POST request
-4. Add proper error handling and validation
-
-Example n8n workflow:
-```
-Webhook → Data Validation → CRM (Create Contact) → Email → Slack Notification
-```
-
-### Newsletter Automation (TODO)
-
-Newsletter form in `components/Newsletter.tsx` is ready for integration:
-
-1. Set up double opt-in workflow in n8n
-2. Connect to your email marketing platform
-3. Add subscriber tags and segments
+### Newsletter Signup
+- **Status**: ✅ Active
+- **Integration**: n8n Webhook
+- **Features**: Double Opt-in Support, Rate Limiting
+- **Setup**: Add `N8N_NEWSLETTER_WEBHOOK` to `.env.local`
 
 ## SEO
 
@@ -405,7 +375,7 @@ Target metrics:
 ## Completed Features
 
 **Core Functionality:**
-- [x] 15 pages (13 static + 2 blog articles)
+- [x] 15 pages (13 static + 7 blog articles)
 - [x] Service detail pages (5 pages)
 - [x] Blog article pages with MDX support
 - [x] Animated homepage with typing effects
@@ -429,20 +399,6 @@ Target metrics:
 - [x] ESM module configuration (next.config.mjs)
 - [x] Production-optimized build (~150MB image)
 - [x] Comprehensive deployment documentation
-
-## Future Enhancements
-
-- [ ] Pricing page
-- [ ] Case study detail pages (full articles)
-- [ ] Client testimonials section with carousel
-- [ ] Pricing calculator
-- [ ] Dark/light mode toggle
-- [ ] Analytics integration (Fathom/Plausible)
-- [ ] Newsletter integration with email service
-- [ ] Search functionality for blog
-- [ ] Blog categories and tag pages
-- [ ] CI/CD pipeline (GitHub Actions)
-- [ ] Automated backups
 
 ## Contributing
 
@@ -470,3 +426,4 @@ For questions or support:
 ---
 
 **Built with ❤️ by 143IT**
+

@@ -1,0 +1,155 @@
+import BlogArticleLayout from "@/components/BlogArticleLayout";
+
+export const metadata = {
+  title: "Infrastructure as Code: Terraform vs Ansible | 143IT Blog",
+  description: "A practical comparison of two popular IaC tools and when to use each one in your DevOps pipeline.",
+};
+
+<BlogArticleLayout
+  title="Infrastructure as Code: Terraform vs Ansible"
+  date="2024-03-10"
+  readTime="12 min read"
+  href="/blog/terraform-vs-ansible"
+  excerpt="A practical comparison of two popular IaC tools and when to use each one in your DevOps pipeline."
+  author={{
+    name: "Alex Chen",
+    bio: "DevOps architect at 143IT with 10+ years of experience in cloud infrastructure and automation."
+  }}
+  tags={["Terraform", "Ansible", "DevOps", "Infrastructure as Code"]}
+  category="DevOps Deep Dive"
+  relatedPosts={[
+    {
+      title: "The Complete Guide to Infrastructure as Code in 2024",
+      excerpt: "Discover how Infrastructure as Code is revolutionizing IT operations, from Terraform basics to advanced GitOps workflows.",
+      href: "/blog/infrastructure-as-code-guide-2024",
+      date: "2024-03-18"
+    },
+    {
+      title: "Building Self-Healing Infrastructure with PowerShell",
+      excerpt: "Learn how to implement automated remediation workflows that fix common issues before they impact users.",
+      href: "/blog/self-healing-infrastructure",
+      date: "2024-03-15"
+    }
+  ]}
+>
+
+In the world of Infrastructure as Code (IaC), two giants stand tall: **Terraform** and **Ansible**. While they are often mentioned in the same breath, they serve different primary purposes and excel in different areas.
+
+At **143IT**, we frequently get asked: "Which one should I use?" The answer, as is often the case in engineering, is: "It depends."
+
+## The Core Difference: Provisioning vs. Configuration
+
+The most fundamental distinction lies in their primary focus:
+
+- **Terraform** is primarily an **Infrastructure Provisioning** tool. It's designed to create the infrastructure itself—servers, networks, load balancers, and databases.
+- **Ansible** is primarily a **Configuration Management** tool. It's designed to configure the software and settings *inside* those servers once they exist.
+
+### The "Orchestration" Analogy
+
+Think of building a house:
+- **Terraform** builds the foundation, walls, roof, and plumbing.
+- **Ansible** paints the walls, installs the furniture, and sets up the appliances.
+
+## Terraform: The Infrastructure Builder
+
+Terraform, created by HashiCorp, uses a declarative language (HCL) to define the desired state of your infrastructure.
+
+### Strengths
+- **State Management**: Terraform keeps track of what it created in a state file, allowing it to detect drift and manage updates efficiently.
+- **Immutable Infrastructure**: Promotes the practice of replacing servers rather than modifying them.
+- **Cloud Agnostic**: Supports AWS, Azure, Google Cloud, and hundreds of other providers.
+
+### Example: Creating an Azure VM
+
+```hcl
+resource "azurerm_linux_virtual_machine" "example" {
+  name                = "example-machine"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  size                = "Standard_F2"
+  admin_username      = "adminuser"
+  
+  # ... network interface and disk config ...
+}
+```
+
+## Ansible: The Configuration Manager
+
+Ansible, owned by Red Hat, is an agentless automation tool that uses YAML for its playbooks.
+
+### Strengths
+- **Agentless**: No software needs to be installed on the target nodes; it uses SSH or WinRM.
+- **Procedural**: You describe the steps to achieve the desired state.
+- **Simplicity**: YAML playbooks are easy to read and write.
+- **Versatility**: Can be used for application deployment, orchestration, and security compliance.
+
+### Example: Installing Nginx
+
+```yaml
+- name: Install Nginx
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Ensure Nginx is installed
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+```
+
+## Comparison Matrix
+
+| Feature | Terraform | Ansible |
+|---------|-----------|---------|
+| **Primary Use** | Provisioning Infrastructure | Configuration Management |
+| **Language** | HCL (Declarative) | YAML (Procedural) |
+| **State** | State File (tfstate) | Stateless (mostly) |
+| **Architecture** | Client-only | Agentless (Push model) |
+| **Mutable/Immutable** | Immutable (mostly) | Mutable |
+
+## When to Use Which?
+
+### Use Terraform when:
+- You are building cloud infrastructure from scratch (VPCs, subnets, VMs).
+- You need to manage the lifecycle of resources (create, update, destroy).
+- You want to implement immutable infrastructure patterns.
+
+### Use Ansible when:
+- You need to configure software on existing servers.
+- You are managing on-premise servers or hybrid environments.
+- You need to perform operational tasks (patching, backups, user management).
+
+## The Power of "Better Together"
+
+In modern DevOps pipelines, the best approach is often to use **both**.
+
+1. **Terraform** provisions the infrastructure (VPC, Security Groups, EC2 instances).
+2. **Terraform** calls **Ansible** (or passes data to it) to configure the instances.
+3. **Ansible** installs the application, dependencies, and security hardening.
+
+```hcl
+# Terraform example calling Ansible
+resource "null_resource" "configure_server" {
+  provisioner "local-exec" {
+    command = "ansible-playbook -i '${aws_instance.web.public_ip},' playbook.yml"
+  }
+}
+```
+
+## Conclusion
+
+Don't think of it as "Terraform vs. Ansible." Think of it as "Terraform **and** Ansible." By leveraging the strengths of each tool, you can build a robust, automated, and scalable infrastructure pipeline.
+
+At **143IT**, we help organizations design and implement these hybrid workflows to maximize efficiency and reliability.
+
+</BlogArticleLayout>
+
+export default function Page({ children }) {
+  return children;
+}

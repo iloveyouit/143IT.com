@@ -15,6 +15,18 @@ export function middleware(request: NextRequest) {
     'camera=(), microphone=(), geolocation=()'
   );
 
+  // Content Security Policy
+  response.headers.set(
+    'Content-Security-Policy',
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline'; " + // unsafe-inline needed for Next.js
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+    "font-src 'self' https://fonts.gstatic.com; " +
+    "img-src 'self' data: https: blob:; " +
+    "connect-src 'self' https://api.openai.com; " +
+    "frame-ancestors 'self';"
+  );
+
   // Only add HSTS in production with HTTPS
   if (process.env.NODE_ENV === 'production') {
     response.headers.set(

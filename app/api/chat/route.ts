@@ -1,9 +1,27 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { z } from 'zod';
+import { checkRateLimit, getClientIdentifier } from '@/lib/rate-limit';
 
 // Force dynamic rendering - don't evaluate at build time
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+
+// Validation schema for chat messages
+const messageSchema = z.object({
+  role: z.enum(['user', 'assistant', 'system']),
+  content: z.string().max(2000, 'Message content is too long'),
+});
+
+const chatRequestSchema = z.object({
+  messages: z.array(messageSchema).min(1, 'At least one message is required').max(10, 'Too many messages in history'),
+});
+
+// Rate limit configuration: 10 requests per minute
+const RATE_LIMIT_CONFIG = {
+  limit: 10,
+  windowMs: 60 * 1000, // 1 minute
+};
 
 // System prompt with 143IT context
 const SYSTEM_PROMPT = `You are an AI assistant for 143IT, a Managed Service Provider (MSP) specializing in automation, cloud modernization, and AI-powered infrastructure solutions.
@@ -70,11 +88,46 @@ Always be helpful and direct complex or urgent issues to the human team.`;
 
 export async function POST(request: Request) {
   try {
-    const { messages } = await request.json();
+    // Rate limiting
+    const clientId = getClientIdentifier(request);
+    const rateLimitResult = checkRateLimit(clientId, RATE_LIMIT_CONFIG);
+
+    if (!rateLimitResult.success) {
+      const resetDate = new Date(rateLimitResult.reset);
+      return NextResponse.json(
+        {
+          error: 'Too many requests. Please try again later.',
+          retryAfter: resetDate.toISOString(),
+        },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': rateLimitResult.reset.toString(),
+            'Retry-After': Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString(),
+          },
+        }
+      );
+    }
+
+    // Parse and validate request body
+    const body = await request.json();
+    const validationResult = chatRequestSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        { error: 'Invalid request format', details: validationResult.error.issues },
+        { status: 400 }
+      );
+    }
+
+    const { messages } = validationResult.data;
 
     if (!process.env.OPENAI_API_KEY) {
+      console.error('OPENAI_API_KEY is not defined');
       return NextResponse.json(
-        { error: 'OpenAI API key not configured' },
+        { error: 'Service configuration error' },
         { status: 500 }
       );
     }
@@ -98,7 +151,16 @@ export async function POST(request: Request) {
     const assistantMessage = completion.choices[0]?.message?.content ||
       "I'm sorry, I couldn't generate a response. Please try again.";
 
-    return NextResponse.json({ message: assistantMessage });
+    return NextResponse.json(
+      { message: assistantMessage },
+      {
+        headers: {
+          'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+          'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+          'X-RateLimit-Reset': rateLimitResult.reset.toString(),
+        },
+      }
+    );
   } catch (error) {
     console.error('OpenAI API error:', error);
 

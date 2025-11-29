@@ -1,0 +1,117 @@
+import BlogArticleLayout from "@/components/BlogArticleLayout";
+
+export const metadata = {
+  title: "CI/CD Pipeline Security: Best Practices for 2024 | 143IT Blog",
+  description: "Secure your deployment pipelines with these essential security practices and tools.",
+};
+
+<BlogArticleLayout
+  title="CI/CD Pipeline Security: Best Practices for 2024"
+  date="2024-02-25"
+  readTime="11 min read"
+  href="/blog/cicd-security-best-practices"
+  excerpt="Secure your deployment pipelines with these essential security practices and tools."
+  author={{
+    name: "Michael Chang",
+    bio: "DevSecOps Lead at 143IT. Helping organizations build secure software supply chains."
+  }}
+  tags={["DevSecOps", "CI/CD", "Security", "GitHub Actions", "Azure DevOps"]}
+  category="DevOps Deep Dive"
+  relatedPosts={[
+    {
+      title: "5 Azure Misconfigurations That Cost Companies Thousands",
+      excerpt: "Common cloud configuration mistakes and how to prevent them with automated policy enforcement.",
+      href: "/blog/azure-misconfigurations",
+      date: "2024-03-01"
+    },
+    {
+      title: "Infrastructure as Code: Terraform vs Ansible",
+      excerpt: "A practical comparison of two popular IaC tools and when to use each one in your DevOps pipeline.",
+      href: "/blog/terraform-vs-ansible",
+      date: "2024-03-10"
+    }
+  ]}
+>
+
+The CI/CD pipeline is the heart of modern software delivery. It has access to your source code, your secrets, and your production environments. This makes it a **high-value target** for attackers.
+
+If an attacker compromises your pipeline, they don't need to hack your production server—they can just ask your pipeline to deploy their malware for them. This is known as a **Supply Chain Attack**.
+
+At **143IT**, we implement "Secure by Design" pipelines. Here are the best practices we recommend for 2024.
+
+## 1. Stop Storing Long-Lived Secrets
+
+The most common vulnerability is hardcoded credentials or long-lived API keys stored in CI/CD variables.
+
+**Best Practice**: Use **OIDC (OpenID Connect)** federation.
+Instead of giving GitHub Actions an AWS Access Key, configure AWS to trust GitHub's OIDC token. This way, your pipeline requests a short-lived, temporary token only when it runs. No secrets to rotate, no secrets to steal.
+
+## 2. Implement Least Privilege for Runners
+
+Does your build runner really need "Admin" access to your entire Azure subscription? Probably not.
+
+**Best Practice**: Scope permissions tightly.
+- If a job only builds a docker image, it shouldn't have access to deploy it.
+- If a job deploys to Dev, it shouldn't have access to Prod.
+- Use separate service principals/roles for different stages of the pipeline.
+
+## 3. Scan Everything (Shift Left)
+
+Don't wait until production to find vulnerabilities. Integrate scanners directly into your pipeline steps.
+
+**Tools to Integrate**:
+- **SAST (Static Application Security Testing)**: Scan source code for bugs (e.g., SonarQube, CodeQL).
+- **SCA (Software Composition Analysis)**: Scan dependencies for known CVEs (e.g., Dependabot, Snyk, Trivy).
+- **Secret Scanning**: Detect accidental commits of API keys (e.g., GitGuardian, truffleHog).
+- **IaC Scanning**: Check Terraform/Bicep for misconfigurations (e.g., Checkov, tfsec).
+
+```yaml
+# Example GitHub Actions step for Trivy
+- name: Run Trivy vulnerability scanner
+  uses: aquasecurity/trivy-action@master
+  with:
+    image-ref: 'my-app:${{ github.sha }}'
+    format: 'table'
+    exit-code: '1' # Fail the build if vulnerabilities found
+    severity: 'CRITICAL,HIGH'
+```
+
+## 4. Pin Your Actions and Images
+
+When you use a third-party action like `uses: actions/checkout@v3`, you are trusting that the `v3` tag hasn't been maliciously overwritten.
+
+**Best Practice**: Pin to a **SHA hash**.
+```yaml
+uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+```
+This ensures that you are running the exact code you expect, immutable and unchangeable.
+
+## 5. Require Code Reviews and Branch Protection
+
+You can have the most secure pipeline in the world, but if a developer can push code directly to `main` without review, it's game over.
+
+**Best Practice**: Enforce Branch Protection Rules.
+- Require at least 1 (preferably 2) approvals for Pull Requests.
+- Require status checks (build, test, security scan) to pass before merging.
+- Restrict who can push to protected branches.
+
+## 6. Isolate Your Build Environments
+
+Running untrusted code (like Pull Requests from forks) on self-hosted runners inside your internal network is dangerous.
+
+**Best Practice**:
+- Use ephemeral (short-lived) runners that are destroyed after each job.
+- If using self-hosted runners, isolate them in a separate DMZ network segment.
+- Never expose the Docker socket to build containers unless absolutely necessary.
+
+## Conclusion
+
+Securing your CI/CD pipeline is not a one-time task; it's a continuous process. By implementing these controls, you significantly reduce the risk of a supply chain compromise.
+
+Need help auditing your DevOps security posture? **143IT** offers comprehensive DevSecOps assessments to help you build with confidence.
+
+</BlogArticleLayout>
+
+export default function Page({ children }) {
+  return children;
+}

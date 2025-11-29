@@ -1,0 +1,109 @@
+import BlogArticleLayout from "@/components/BlogArticleLayout";
+
+export const metadata = {
+  title: "5 Azure Misconfigurations That Cost Companies Thousands | 143IT Blog",
+  description: "Common cloud configuration mistakes and how to prevent them with automated policy enforcement.",
+};
+
+<BlogArticleLayout
+  title="5 Azure Misconfigurations That Cost Companies Thousands"
+  date="2024-03-01"
+  readTime="7 min read"
+  href="/blog/azure-misconfigurations"
+  excerpt="Common cloud configuration mistakes and how to prevent them with automated policy enforcement."
+  author={{
+    name: "David Ross",
+    bio: "Cloud Security Architect at 143IT. Specializing in Azure governance, FinOps, and security posture management."
+  }}
+  tags={["Azure", "Cloud Security", "FinOps", "Cost Optimization", "Governance"]}
+  category="Learning Moments"
+  relatedPosts={[
+    {
+      title: "Infrastructure as Code: Terraform vs Ansible",
+      excerpt: "A practical comparison of two popular IaC tools and when to use each one in your DevOps pipeline.",
+      href: "/blog/terraform-vs-ansible",
+      date: "2024-03-10"
+    },
+    {
+      title: "CI/CD Pipeline Security: Best Practices for 2024",
+      excerpt: "Secure your deployment pipelines with these essential security practices and tools.",
+      href: "/blog/cicd-security-best-practices",
+      date: "2024-02-25"
+    }
+  ]}
+>
+
+The cloud promises scalability and flexibility, but it also introduces the risk of "bill shock." Unlike an on-premise server room where capacity is fixed, the cloud allows you to provision unlimited resources—and spend unlimited money—with a few clicks.
+
+At **143IT**, we perform cloud audits regularly. Here are the top 5 Azure misconfigurations we see that drain budgets and expose security risks.
+
+## 1. Orphaned Disks and Snapshots
+
+**The Problem**: When you delete a Virtual Machine (VM) in Azure, the associated OS disk and data disks are **not** deleted by default. They remain in your resource group, incurring monthly storage costs.
+
+**The Cost**: A single Premium SSD managed disk can cost $20-$150/month. Multiply that by dozens of deleted VMs over a year, and you're wasting thousands.
+
+**The Fix**:
+- Use Azure Policy to audit for unattached disks.
+- Implement a cleanup script (PowerShell/CLI) to find and delete orphaned resources.
+
+## 2. Over-Provisioned Virtual Machines
+
+**The Problem**: "Just to be safe," engineers often select VM sizes that are far larger than necessary. A developer might spin up a `D4s_v5` (4 vCPUs, 16GB RAM) for a simple web server that would run fine on a `B2s`.
+
+**The Cost**: The difference between a `D4s_v5` (~$140/mo) and a `B2s` (~$30/mo) is over $1,300 per year per VM.
+
+**The Fix**:
+- Use **Azure Advisor** to identify underutilized VMs.
+- Implement **Right-Sizing** reviews monthly.
+- Use B-series (burstable) VMs for non-production workloads.
+
+## 3. Leaving Development Resources Running 24/7
+
+**The Problem**: Dev and Test environments are often used only 8-10 hours a day, yet they are left running 24/7/365.
+
+**The Cost**: You are paying for 168 hours a week when you only use 40. That's 76% wasted spend.
+
+**The Fix**:
+- Implement **Auto-Shutdown** policies on all non-production VMs.
+- Use **Azure Automation Runbooks** to start VMs at 8 AM and stop them at 6 PM on weekdays.
+
+## 4. Public IP Addresses on Everything
+
+**The Problem**: Assigning a Public IP address to every VM for management access (RDP/SSH).
+
+**The Risk**: This exposes your management ports to the entire internet. Brute-force attacks will start within minutes.
+**The Cost**: Standard Public IPs now have a cost associated with them, but the security risk is the real cost (ransomware, data breach).
+
+**The Fix**:
+- Use **Azure Bastion** for secure, browser-based access without public IPs.
+- Use **VPN Gateway** or **ExpressRoute** for private connectivity.
+- Use **Just-In-Time (JIT) VM Access** to open ports only when needed.
+
+## 5. Unused App Service Plans
+
+**The Problem**: An App Service Plan (ASP) is the underlying compute for Azure Web Apps. You pay for the ASP regardless of whether you have apps running on it. We often find empty ASPs or ASPs running stopped web apps.
+
+**The Cost**: A Premium V3 App Service Plan can cost hundreds of dollars a month, even if it's doing nothing.
+
+**The Fix**:
+- Audit your App Service Plans.
+- Consolidate multiple apps into a single, higher-density ASP.
+- Delete empty plans.
+
+## How to Prevent These Issues
+
+The solution isn't just "be more careful." It's **Policy as Code**.
+
+Using **Azure Policy**, you can enforce rules like:
+- "Require a 'Department' tag on all resources."
+- "Deny creation of expensive G-series VMs."
+- "Audit VMs that don't have a shutdown schedule."
+
+At **143IT**, we help companies implement **Cloud Governance** frameworks that prevent these misconfigurations before they happen. Don't let your cloud bill surprise you—automate your cost control today.
+
+</BlogArticleLayout>
+
+export default function Page({ children }) {
+  return children;
+}

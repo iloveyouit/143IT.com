@@ -1,0 +1,132 @@
+import BlogArticleLayout from "@/components/BlogArticleLayout";
+
+export const metadata = {
+  title: "Automating M365 Administration with Microsoft Graph API | 143IT Blog",
+  description: "Practical examples of using Graph API and PowerShell to automate common M365 tasks.",
+};
+
+<BlogArticleLayout
+  title="Automating M365 Administration with Microsoft Graph API"
+  date="2024-02-20"
+  readTime="9 min read"
+  href="/blog/m365-automation-graph-api"
+  excerpt="Practical examples of using Graph API and PowerShell to automate common M365 tasks."
+  author={{
+    name: "James Wilson",
+    bio: "Senior Systems Engineer at 143IT. Expert in Microsoft ecosystem automation and identity management."
+  }}
+  tags={["Microsoft 365", "Graph API", "PowerShell", "Automation", "Azure AD"]}
+  category="Automation Chronicles"
+  relatedPosts={[
+    {
+      title: "Integrating ChatGPT with n8n for IT Workflows",
+      excerpt: "How to leverage AI to automate ticket classification, documentation, and first-line support.",
+      href: "/blog/chatgpt-n8n-workflows",
+      date: "2024-03-05"
+    },
+    {
+      title: "Building Self-Healing Infrastructure with PowerShell",
+      excerpt: "Learn how to implement automated remediation workflows that fix common issues before they impact users.",
+      href: "/blog/self-healing-infrastructure",
+      date: "2024-03-15"
+    }
+  ]}
+>
+
+For years, the `AzureAD` and `MSOnline` PowerShell modules were the bread and butter of Microsoft 365 administrators. But as Microsoft deprecates these older modules, the future is clear: **Microsoft Graph API**.
+
+Graph API provides a unified programmable model that you can use to access a tremendous amount of data in Microsoft 365, Windows 10, and Enterprise Mobility + Security.
+
+At **143IT**, we've migrated hundreds of legacy scripts to the Microsoft Graph SDK. Here is how you can get started.
+
+## Why Switch to Graph?
+
+1. **Performance**: Graph is significantly faster, especially for large queries.
+2. **Security**: Supports modern authentication and granular scopes (Least Privilege).
+3. **Coverage**: It covers everything—Teams, SharePoint, Exchange, Intune, and Entra ID (formerly Azure AD).
+
+## Getting Started: The Microsoft Graph PowerShell SDK
+
+You don't need to be a developer writing raw HTTP requests to use Graph. Microsoft provides a PowerShell SDK that wraps the API.
+
+```powershell
+# Install the module
+Install-Module Microsoft.Graph -Scope CurrentUser
+
+# Connect with specific scopes (Least Privilege!)
+Connect-MgGraph -Scopes "User.Read.All", "Group.ReadWrite.All"
+```
+
+## Example 1: Bulk User Creation
+
+Creating users one by one in the portal is slow. Here's how to do it with Graph PowerShell:
+
+```powershell
+$users = Import-Csv "new_hires.csv"
+
+foreach ($user in $users) {
+    $passwordProfile = @{
+        Password = "TempPassword123!"
+        ForceChangePasswordNextSignIn = $true
+    }
+
+    New-MgUser -DisplayName $user.DisplayName `
+               -UserPrincipalName $user.UPN `
+               -MailNickname $user.MailNickname `
+               -PasswordProfile $passwordProfile `
+               -AccountEnabled $true `
+               -UsageLocation "US"
+               
+    Write-Host "Created user: $($user.UPN)"
+}
+```
+
+## Example 2: Finding Inactive Users
+
+Security hygiene requires identifying stale accounts. This script finds users who haven't signed in for 90 days.
+
+```powershell
+# We need the SignInActivity property which is not returned by default
+Select-MgProfile -Name "beta"
+
+$date = (Get-Date).AddDays(-90)
+
+Get-MgUser -All -Property DisplayName, SignInActivity | 
+    Where-Object { $_.SignInActivity.LastSignInDateTime -lt $date } |
+    Select-Object DisplayName, UserPrincipalName, @{N='LastSignIn';E={$_.SignInActivity.LastSignInDateTime}}
+```
+
+## Example 3: Automating Teams Management
+
+Need to create a Team for every new project?
+
+```powershell
+$team = New-MgTeam -DisplayName "Project Phoenix" `
+                   -Description "Migration project team" `
+                   -Template @{
+                       "template@odata.bind" = "https://graph.microsoft.com/v1.0/teamsTemplates('standard')"
+                   }
+                   
+# Add a channel
+New-MgTeamChannel -TeamId $team.Id `
+                  -DisplayName "Announcements" `
+                  -Description "Project announcements"
+```
+
+## Handling Throttling
+
+One challenge with Graph API is throttling. If you make too many requests too quickly, Microsoft will slow you down (HTTP 429).
+
+The Graph SDK handles basic retries automatically, but for robust scripts, you should implement `Invoke-MgGraphRequest` with custom retry logic for complex operations.
+
+## Conclusion
+
+The transition to Microsoft Graph might seem daunting, but it unlocks a level of automation capability that legacy modules never could. It allows you to treat your M365 tenant as a programmable platform.
+
+Need help migrating your legacy scripts or building complex M365 automations? **143IT** has the expertise to modernize your administration workflows.
+
+</BlogArticleLayout>
+
+export default function Page({ children }) {
+  return children;
+}

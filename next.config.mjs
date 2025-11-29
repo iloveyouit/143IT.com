@@ -23,8 +23,18 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: '143it.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.143it.com',
+      },
+      // Add other trusted domains as needed
+      // Example: Unsplash for blog images
+      // {
+      //   protocol: 'https',
+      //   hostname: 'images.unsplash.com',
+      // },
     ],
   },
 };

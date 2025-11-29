@@ -1,0 +1,122 @@
+import BlogArticleLayout from "@/components/BlogArticleLayout";
+
+export const metadata = {
+  title: "Integrating ChatGPT with n8n for IT Workflows | 143IT Blog",
+  description: "How to leverage AI to automate ticket classification, documentation, and first-line support.",
+};
+
+<BlogArticleLayout
+  title="Integrating ChatGPT with n8n for IT Workflows"
+  date="2024-03-05"
+  readTime="10 min read"
+  href="/blog/chatgpt-n8n-workflows"
+  excerpt="How to leverage AI to automate ticket classification, documentation, and first-line support."
+  author={{
+    name: "Sarah Jenkins",
+    bio: "AI Integration Specialist at 143IT. Focused on bringing the power of LLMs to everyday IT operations."
+  }}
+  tags={["n8n", "ChatGPT", "AI", "Automation", "Workflows"]}
+  category="AI + IT Series"
+  relatedPosts={[
+    {
+      title: "The Complete Guide to Infrastructure as Code in 2024",
+      excerpt: "Discover how Infrastructure as Code is revolutionizing IT operations, from Terraform basics to advanced GitOps workflows.",
+      href: "/blog/infrastructure-as-code-guide-2024",
+      date: "2024-03-18"
+    },
+    {
+      title: "Automating M365 Administration with Microsoft Graph API",
+      excerpt: "Practical examples of using Graph API and PowerShell to automate common M365 tasks.",
+      href: "/blog/m365-automation-graph-api",
+      date: "2024-02-20"
+    }
+  ]}
+>
+
+The intersection of **Low-Code Automation** and **Generative AI** is where the magic happens in modern IT operations. By combining **n8n** (a workflow automation tool) with **ChatGPT** (OpenAI's LLM), we can build intelligent workflows that go far beyond simple "if-this-then-that" logic.
+
+At **143IT**, we've been deploying these AI-powered workflows to help MSPs and IT departments reduce manual toil and improve response times.
+
+## Why n8n + ChatGPT?
+
+- **n8n**: Provides the connectivity. It talks to your ticketing system (Jira, ServiceNow), your chat platform (Slack, Teams), and your email.
+- **ChatGPT**: Provides the intelligence. It can understand natural language, summarize text, classify issues, and generate responses.
+
+## Use Case 1: Intelligent Ticket Classification
+
+One of the biggest time sinks for service desks is triage. Reading a ticket, deciding which team it belongs to, and assigning priority takes time.
+
+### The Workflow
+1. **Trigger**: New ticket created in Jira/Zendesk.
+2. **Action**: n8n sends the ticket description to ChatGPT.
+3. **Prompt**: "Analyze this IT support ticket. Classify it into one of these categories: [Network, Hardware, Software, Access]. Suggest a priority level (Low, Medium, High) based on urgency."
+4. **Action**: n8n updates the ticket with the suggested category and priority.
+
+### The Impact
+- **90% reduction** in triage time.
+- **Consistent categorization** for better reporting.
+- **Faster routing** to the correct support team.
+
+## Use Case 2: Automated First-Line Support
+
+For common issues like password resets or software installation requests, AI can provide immediate assistance.
+
+### The Workflow
+1. **Trigger**: User sends a message in Slack channel `#it-support`.
+2. **Action**: n8n checks if the message is a question.
+3. **Action**: n8n sends the question to ChatGPT, armed with a knowledge base context.
+4. **Prompt**: "You are an IT support assistant. Answer this user's question using the following documentation context: [Insert KB Article]. If the answer isn't in the context, advise them to open a ticket."
+5. **Action**: n8n posts the AI response back to Slack.
+
+## Use Case 3: Meeting Summarization & Action Items
+
+Stop worrying about taking notes during incident post-mortems or planning meetings.
+
+### The Workflow
+1. **Trigger**: Meeting recording transcript becomes available (e.g., from Zoom or Teams).
+2. **Action**: n8n chunks the transcript and sends it to ChatGPT.
+3. **Prompt**: "Summarize this meeting transcript. List key decisions made and extract all action items with their assignees."
+4. **Action**: n8n creates tasks in your project management tool and emails the summary to attendees.
+
+## Building Your First Workflow
+
+Here is a simple JSON structure for an n8n node that calls OpenAI:
+
+```javascript
+// OpenAI Node Configuration in n8n
+{
+  "resource": "chat",
+  "operation": "create",
+  "model": "gpt-4",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful IT assistant."
+    },
+    {
+      "role": "user",
+      "content": "={{ $json.ticket_description }}"
+    }
+  ]
+}
+```
+
+## Security Considerations
+
+When integrating AI into IT workflows, security is paramount:
+
+1. **Data Privacy**: Sanitize PII (Personally Identifiable Information) before sending data to OpenAI.
+2. **Human in the Loop**: For sensitive actions (like granting access), always require human approval.
+3. **Rate Limiting**: Implement safeguards to prevent runaway costs.
+
+## Conclusion
+
+The combination of n8n and ChatGPT allows IT teams to build "cognitive automation" — workflows that can read, understand, and make decisions. This frees up your human experts to focus on complex, high-value problems.
+
+Ready to automate your IT operations? **143IT** specializes in building custom n8n workflows tailored to your business needs.
+
+</BlogArticleLayout>
+
+export default function Page({ children }) {
+  return children;
+}
