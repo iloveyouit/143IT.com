@@ -122,19 +122,32 @@ npm run dev
 For production deployment with Docker:
 
 ```bash
-# Using Docker Compose (recommended)
+# 1. Create environment file for production
+cp .env.production.example .env.production
+
+# 2. Edit .env.production with your actual values
+nano .env.production
+# Add your OpenAI API key and n8n webhook URLs
+
+# 3. Build and start with Docker Compose (recommended)
 docker-compose up -d
+
+# 4. View logs
+docker-compose logs -f web
+
+# 5. Verify environment variables are loaded
+docker exec 143it-web env | grep -E "N8N|OPENAI"
 
 # Or build and run manually
 npm run docker:build
 npm run docker:run
 
-# View logs
-npm run docker:logs
-
 # Stop container
 npm run docker:stop
 ```
+
+> **Important:** The contact form and newsletter require `N8N_CONTACT_WEBHOOK` and `N8N_NEWSLETTER_WEBHOOK` to be set in `.env.production`. See [VPS_DEPLOYMENT_CHECKLIST.md](./VPS_DEPLOYMENT_CHECKLIST.md) for detailed setup instructions.
+
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment documentation.
 

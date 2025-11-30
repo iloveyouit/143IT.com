@@ -102,6 +102,9 @@ Use "node .next/standalone/server.js" instead.
 
 Deploy to any VPS (DigitalOcean, Linode, Vultr, etc.):
 
+> [!IMPORTANT]
+> **Environment Variables Required**: The contact form and newsletter features require n8n webhook URLs to be configured. See the [VPS Deployment Checklist](file:///Users/me/Documents/GitHub/143IT.com/VPS_DEPLOYMENT_CHECKLIST.md) for a complete step-by-step guide.
+
 ```bash
 # 1. SSH into your VPS
 ssh user@your-server.com
@@ -115,15 +118,34 @@ sudo usermod -aG docker $USER
 git clone https://github.com/yourusername/143IT.com.git
 cd 143IT.com
 
-# 4. Set environment variables (if needed)
+# 4. Set environment variables
+# Copy the example file and edit with your actual values
+cp .env.production.example .env.production
 nano .env.production
+
+# Required values:
+# - OPENAI_API_KEY: Your OpenAI API key
+# - N8N_CONTACT_WEBHOOK: Your n8n contact form webhook URL
+# - N8N_NEWSLETTER_WEBHOOK: Your n8n newsletter webhook URL
 
 # 5. Build and run
 docker-compose up -d
 
-# 6. Set up reverse proxy (nginx or Caddy)
-# See SSL/TLS section below
+# 6. Verify the container is running
+docker ps
+docker-compose logs -f web
+
+# 7. Test the contact form
+curl -X POST http://localhost:3000/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test","email":"test@example.com","message":"Test message"}'
+
+# 8. Set up reverse proxy (nginx or Caddy)
+# See SSL/TLS section below or VPS_DEPLOYMENT_CHECKLIST.md
 ```
+
+**For a complete step-by-step guide, see [VPS_DEPLOYMENT_CHECKLIST.md](file:///Users/me/Documents/GitHub/143IT.com/VPS_DEPLOYMENT_CHECKLIST.md)**
+
 
 #### Option 2: AWS ECS (Elastic Container Service)
 
@@ -410,24 +432,76 @@ az webapp deployment source config-local-git \
 
 ## Environment Variables
 
-Create `.env.production` file for production environment variables:
+The 143IT website requires environment variables for certain features to work properly.
+
+### Required Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `OPENAI_API_KEY` | Optional | OpenAI API key for AI chatbot functionality |
+| `N8N_CONTACT_WEBHOOK` | **Required for contact form** | n8n webhook URL for contact form submissions |
+| `N8N_NEWSLETTER_WEBHOOK` | **Required for newsletter** | n8n webhook URL for newsletter signups |
+
+### Development Environment
+
+For local development, create a `.env.local` file:
 
 ```bash
-# Required for production
-NODE_ENV=production
+# Copy the example file
+cp .env.example .env.local
 
-# Optional: n8n webhook URLs (when ready)
-NEXT_PUBLIC_CONTACT_WEBHOOK_URL=https://your-n8n.com/webhook/contact
-NEXT_PUBLIC_NEWSLETTER_WEBHOOK_URL=https://your-n8n.com/webhook/newsletter
-
-# Optional: Analytics
-NEXT_PUBLIC_ANALYTICS_ID=your-analytics-id
-
-# Optional: Custom domain
-NEXT_PUBLIC_SITE_URL=https://143it.com
+# Edit with your values
+nano .env.local
 ```
 
+Example `.env.local`:
+```bash
+OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxx
+N8N_CONTACT_WEBHOOK=https://n8n.yourdomain.com/webhook/contact
+N8N_NEWSLETTER_WEBHOOK=https://n8n.yourdomain.com/webhook/newsletter
+```
+
+### Production Environment (Docker)
+
+For Docker deployment on a VPS, create a `.env.production` file:
+
+```bash
+# Copy the example file
+cp .env.production.example .env.production
+
+# Edit with your actual production values
+nano .env.production
+```
+
+> [!IMPORTANT]
+> The `.env.production` file is gitignored and should **never** be committed to version control. Each deployment environment should have its own `.env.production` file with appropriate values.
+
+**How it works:**
+1. The `docker-compose.yml` file is configured to read from `.env.production`
+2. Environment variables are passed to the Docker container at runtime
+3. The Next.js application reads these variables via `process.env`
+
 ### Setting Environment Variables
+
+**Docker (using .env.production file):**
+```bash
+# Create .env.production file (recommended)
+cp .env.production.example .env.production
+nano .env.production
+
+# The docker-compose.yml automatically loads this file
+docker-compose up -d
+```
+
+**Docker (inline in docker-compose.yml):**
+```yaml
+# In docker-compose.yml
+environment:
+  - NODE_ENV=production
+  - OPENAI_API_KEY=your-key-here
+  - N8N_CONTACT_WEBHOOK=https://your-webhook-url
+```
+
 
 **Docker:**
 ```bash

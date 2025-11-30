@@ -2,7 +2,53 @@
 
 All notable changes to the 143IT website will be documented in this file.
 
+## [1.3.1] - 2024-11-30
+
+### Fixed
+- **Docker Environment Variables**: Fixed contact form and newsletter failures in Docker deployments
+  - Updated `docker-compose.yml` to load environment variables from `.env.production` file
+  - Added `env_file` directive to automatically read `.env.production`
+  - Explicitly defined required environment variables: `OPENAI_API_KEY`, `N8N_CONTACT_WEBHOOK`, `N8N_NEWSLETTER_WEBHOOK`
+  - Contact form now properly receives webhook URLs in production Docker containers
+
+### Added
+- **Deployment Templates**:
+  - `.env.production.example` - Template file for production environment variables
+  - `VPS_DEPLOYMENT_CHECKLIST.md` - Comprehensive step-by-step VPS deployment guide with:
+    - Environment variable configuration instructions
+    - SSL/TLS setup with nginx and Caddy
+    - Contact form testing procedures
+    - Troubleshooting section
+    - Security recommendations
+
+### Changed
+- **Documentation Updates**:
+  - `DEPLOYMENT.md` - Enhanced Environment Variables section with:
+    - Detailed table of required variables
+    - Separate instructions for development vs production
+    - Docker-specific configuration examples
+    - Security best practices
+  - `DEPLOYMENT.md` - Updated VPS Docker deployment section with environment setup steps
+  - `README.md` - Updated Docker Quick Start section with `.env.production` setup instructions
+  - Added important notes about required webhook URLs for contact form functionality
+
+### Technical Details
+- Environment variables are now properly passed to Docker containers at runtime
+- `.env.production` file is gitignored (security best practice)
+- Docker Compose reads variables using `${VAR_NAME}` syntax from `.env.production`
+- Contact form API validates webhook URL presence and returns appropriate errors
+
+### Files Added
+- `.env.production.example` - Production environment template
+- `VPS_DEPLOYMENT_CHECKLIST.md` - VPS deployment guide
+
+### Files Modified
+- `docker-compose.yml` - Added environment variable support
+- `DEPLOYMENT.md` - Enhanced documentation
+- `README.md` - Updated Docker Quick Start section
+
 ## [1.3.0] - 2025-01-XX
+
 
 ### Added
 - **SEO Enhancements**:
