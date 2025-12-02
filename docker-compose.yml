@@ -13,8 +13,8 @@ services:
       # OpenAI API (for chatbot)
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       # n8n Webhooks (for contact form and newsletter)
-      - N8N_CONTACT_WEBHOOK=${N8N_CONTACT_WEBHOOK}
-      - N8N_NEWSLETTER_WEBHOOK=${N8N_NEWSLETTER_WEBHOOK}
+      - N8N_CONTACT_WEBHOOK_URL=${N8N_CONTACT_WEBHOOK}
+      - N8N_NEWSLETTER_WEBHOOK_URL=${N8N_NEWSLETTER_WEBHOOK}
     env_file:
       - .env.production  # Load from .env.production file on VPS
     restart: unless-stopped
