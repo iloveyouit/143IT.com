@@ -2,6 +2,46 @@
 
 All notable changes to the 143IT website will be documented in this file.
 
+## [1.4.0] - 2024-12-13
+
+### Added
+- **Visual Redesign**: Complete premium tech aesthetic overhaul
+  - Glassmorphism cards with blur and glow effects (`glass-card` utility)
+  - Vibrant gradient accents using cyan, purple, and emerald colors
+  - Grid background patterns and animated gradient orbs
+  - Shimmer text effects and neon shadows
+  - New `ParticleGrid.tsx` component for interactive backgrounds
+
+- **Enhanced Animations**:
+  - 3D card hover effects with perspective transforms
+  - Staggered reveal animations using Framer Motion
+  - Floating tech icons with continuous animations
+  - Animated nav link underlines and logo hover effects
+  - Slide-in mobile menu with staggered items
+
+- **Design Tokens**:
+  - New top-level colors: `cyan`, `purple`, `emerald` for gradient support
+  - Extended box shadows: `glow-cyan`, `glow-purple`, `neon`
+  - New keyframe animations: `pulse-glow`, `shimmer`, `float-slow`, `gradient-x`
+
+### Changed
+- **Hero Section**: Redesigned with gradient orbs, floating icons, glassmorphism stat cards, bolder typography
+- **Header**: Added glassmorphism navbar, animated logo, underline link animations
+- **Pillars**: Added 3D hover effects, gradient-colored titles, shimmer icon backgrounds
+- **FeaturedServices**: Gradient icon backgrounds, hover lift, animated arrows
+- **Footer**: Added gradient top border, animated social icons, grid background
+- **About Page**: Animated hero, glassmorphism story card, gradient value cards
+- **Contact Page**: Glassmorphism form, animated contact info cards, focus glow inputs
+
+### Files Added
+- `components/ParticleGrid.tsx` - Interactive particle canvas background
+
+### Files Modified
+- `tailwind.config.ts` - Extended colors, animations, shadows
+- `app/globals.css` - Glassmorphism utilities, gradient classes
+- `components/Hero.tsx`, `Header.tsx`, `Pillars.tsx`, `FeaturedServices.tsx`, `Footer.tsx`
+- `app/about/page.tsx`, `app/contact/page.tsx`
+
 ## [1.3.1] - 2024-11-30
 
 ### Fixed

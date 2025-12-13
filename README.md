@@ -8,6 +8,11 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
 ## Features
 
 - **Modern Tech Stack**: Next.js 14, TypeScript, TailwindCSS, Framer Motion
+- **Premium Visual Design**:
+  - Glassmorphism cards with blur and glow effects
+  - Vibrant gradients (cyan, purple, emerald accents)
+  - Animated gradient orbs and grid patterns
+  - 3D card hover effects and floating icons
 - **AI Chatbot Widget**: OpenAI-powered assistant with rate limiting and security features
 - **Responsive Design**: Mobile-first, fully responsive across all devices
 - **Advanced SEO**: 
@@ -29,8 +34,8 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
   - Rate limiting on all API endpoints
   - Input sanitization and validation (Zod)
   - Secure image remote patterns
-- **Dark Theme**: High-tech aesthetic with neon blue accents (#00E0FF)
-- **Animations**: Typing effects, scroll animations, animated counters, fade-in sections
+- **Dark Theme**: Premium tech aesthetic with glassmorphism and neon accents
+- **Animations**: Typing effects, scroll animations, animated counters, fade-in sections, 3D hovers
 - **Performance**: Optimized images, lazy loading, minimal JavaScript
 - **Accessibility**: WCAG 2.1 compliant with proper ARIA labels
 
@@ -225,6 +230,9 @@ The `npm start` command will show a warning but still work. For proper productio
 - **Background**: `#0B0F14` (Dark Blue-Gray)
 - **Primary Accent**: `#F59E0B` (Gold)
 - **Secondary Accent**: `#3B82F6` (Blue)
+- **Cyan Accent**: `#06B6D4` (Gradient highlight)
+- **Purple Accent**: `#A855F7` (Gradient highlight)
+- **Emerald Accent**: `#10B981` (Gradient highlight)
 - **Text**: `#E0E0E0`
 - **CTA Hover**: `#FBBF24` (Light Gold)
 
