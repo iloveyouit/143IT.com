@@ -140,6 +140,20 @@ docker-compose up -d
 # 4. View logs
 docker-compose logs -f web
 
+### Fix Server Action Mismatch (VPS)
+
+If you encounter `Error: Failed to find Server Action "x"` after deploying, run a clean rebuild:
+
+```bash
+cd ~/docker/143IT.com && \
+  docker-compose down && \
+  rm -rf .next node_modules && \
+  docker-compose build --no-cache && \
+  docker-compose up -d && \
+  docker-compose logs -f web
+```
+
+
 # 5. Verify environment variables are loaded
 docker exec 143it-web env | grep -E "N8N|OPENAI"
 
