@@ -7,14 +7,8 @@ services:
     container_name: 143it-web
     ports:
       - "3001:3000"
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-      # OpenAI API (for chatbot)
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      # n8n Webhooks (for contact form and newsletter)
-      - N8N_CONTACT_WEBHOOK_URL=${N8N_CONTACT_WEBHOOK}
-      - N8N_NEWSLETTER_WEBHOOK_URL=${N8N_NEWSLETTER_WEBHOOK}
+    # Environment variables are loaded from .env.production via env_file
+
     env_file:
       - .env.production  # Load from .env.production file on VPS
     restart: unless-stopped
