@@ -14,7 +14,7 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
   - Animated gradient orbs and grid patterns
   - 3D card hover effects and floating icons
 - **AI Chatbot Widget**: OpenAI-powered assistant with rate limiting and security features
-- **Azure VM Manager Product Surface**: Product page, guided workflow preview, demo-request funnel, Security & Trust page, and Product Support page
+- **Azure VM Manager Product Surface**: Product page, guided workflow preview, video-demo route, demo-request funnel, Security & Trust page, and Product Support page
 - **Launch QA Artifacts**: Product analytics event plan, asset sanitization checklist, launch QA matrix, and internal-link checker
 - **Responsive Design**: Mobile-first, fully responsive across all devices
 - **Advanced SEO**: 
@@ -54,13 +54,14 @@ Modern, responsive website for **143IT** — a Managed Service Provider speciali
 - **Resources** (`/resources`) - IT guides, tools, downloads, and learning resources
 - **Pricing** (`/pricing`) - Discovery-led service pricing information
 - **Azure VM Manager** (`/products/azure-vm-manager`) - Product overview, guided workflow preview, pricing model, and demo request form
+- **Azure VM Manager Demo** (`/products/azure-vm-manager/demo`) - Placeholder route for the upcoming product video demo
 - **Azure VM Manager Security & Trust** (`/products/azure-vm-manager/security`) - Product security model, boundaries, security contact, and review gates
 - **Azure VM Manager Support** (`/products/azure-vm-manager/support`) - Launch support model, email support channel, and SLA approval gaps
 - **Privacy Policy** (`/legal/privacy`) - Privacy policy and data protection
 - **Terms of Service** (`/legal/terms`) - Terms and conditions
 
 ### Service Detail Pages
-- **Managed IT** (`/services/managed-it`) - 24/7 monitoring, infrastructure management
+- **Managed IT** (`/services/managed-it`) - Monitoring and infrastructure management by approved service scope
 - **Cloud Modernization** (`/services/cloud-modernization`) - Azure/AWS migration, cost optimization
 - **Automation & DevOps** (`/services/automation-devops`) - IaC, CI/CD, GitOps workflows
 - **AI Integration** (`/services/ai-integration`) - ChatGPT, n8n, custom ML models

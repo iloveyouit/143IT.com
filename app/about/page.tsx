@@ -40,7 +40,7 @@ export default function AboutPage() {
     "Infrastructure as Code (Terraform, Ansible)",
     "Security & Compliance Management",
     "AI & Automation Integration",
-    "24/7 Monitoring & Support",
+    "Monitoring & Support by Approved Scope",
     "Disaster Recovery Planning",
   ];
 
@@ -80,6 +80,14 @@ export default function AboutPage() {
           <FadeInSection delay={0.2}>
             <p className="text-xl md:text-2xl text-text/70 max-w-3xl mx-auto">
               Next-Gen IT Management Built for the Future.
+            </p>
+          </FadeInSection>
+
+          <FadeInSection delay={0.3}>
+            <p className="text-sm text-text/50 max-w-3xl mx-auto mt-6">
+              143IT service commitments are scoped by engagement. Azure VM Manager
+              product support commitments are documented separately, and formal
+              product SLA terms remain pending approval.
             </p>
           </FadeInSection>
         </div>
@@ -232,7 +240,7 @@ export default function AboutPage() {
               Let's build something great.
             </p>
             <Link href="/contact" className="btn-primary inline-flex items-center space-x-3 text-lg px-8 py-4">
-              <span>Book a Call</span>
+              <span>Contact 143IT</span>
               <ArrowRight className="h-5 w-5" />
             </Link>
           </FadeInSection>
@@ -241,4 +249,3 @@ export default function AboutPage() {
     </div>
   );
 }
-

@@ -22,13 +22,29 @@ const orbitron = Orbitron({
 
 export const metadata: Metadata = {
   title: "143IT — Automate & Dominate with AI",
-  description: "Next-Gen IT Management with Cloud, Automation, and AI at the Core. MSP services that transform your infrastructure.",
+  description: "143IT provides cloud, automation, and AI-enabled infrastructure services and builds Azure VM Manager for controlled Azure VM operations.",
   keywords: ["MSP", "Managed Services", "IT Automation", "Cloud Migration", "DevOps", "AI Integration", "Azure", "M365", "Next-Gen IT"],
   authors: [{ name: "143IT" }],
   openGraph: {
     title: "143IT — Automate & Dominate with AI",
-    description: "Next-Gen IT Management with Cloud, Automation, and AI at the Core.",
+    description: "Cloud, automation, AI-enabled infrastructure services, and Azure VM Manager for controlled Azure VM operations.",
     type: "website",
+    url: "https://143it.com",
+    siteName: "143IT",
+    images: [
+      {
+        url: "https://143it.com/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "143IT and Azure VM Manager",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "143IT — Automate & Dominate with AI",
+    description: "Cloud, automation, AI-enabled infrastructure services, and Azure VM Manager for controlled Azure VM operations.",
+    images: ["https://143it.com/og-image.svg"],
   },
 };
 

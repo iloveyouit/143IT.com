@@ -103,7 +103,8 @@ Complete before introducing Azure VM Manager prominently.
 3. Replace broken case-study links and eliminate internal 404s.
 4. Refresh, relabel, or temporarily retire stale “Latest Insights” content.
 5. Audit all MSP service and pricing claims for current deliverability.
-6. Run an automated internal-link check.
+6. Separate MSP service support language from Azure VM Manager product support commitments, especially where broad phrases such as “24/7 monitoring & support” appear on homepage/About surfaces.
+7. Run an automated internal-link check.
 
 ### Exit criteria
 
@@ -112,6 +113,7 @@ Complete before introducing Azure VM Manager prominently.
 - No broken internal links.
 - No stale material presented as current.
 - Every service promise is operationally deliverable.
+- Broad MSP support language does not imply unpublished Azure VM Manager support targets, uptime commitments, or SLA coverage.
 
 ## 5. Phase 1 — Product Website Surface
 
@@ -126,18 +128,18 @@ Complete before introducing Azure VM Manager prominently.
    - Contact-us-for-pricing explanation
    - Request-a-Demo CTA
 4. Add a product demonstration.
+   - Clickable guided workflow preview is live.
+   - `/products/azure-vm-manager/demo` is available as the future video-demo route.
+   - `AZURE_VM_MANAGER_VIDEO_DEMO_SCRIPT.md` defines the recording script and safety checklist.
 5. Build the dedicated demo-request form and n8n integration.
 6. Create confirmation and error states.
 7. Document what happens after the demo and how assisted trials are approved.
 
-### Product demonstration decision still required
+### Product demonstration direction
 
-Choose one:
-
-- Clickable guided screenshot tour (current recommendation)
-- Short product video
-- Annotated static walkthrough
-- Combined guided tour and video
+- Clickable guided workflow preview is live.
+- Short product video is planned for the dedicated demo route.
+- The video script and recording checklist are documented in `AZURE_VM_MANAGER_VIDEO_DEMO_SCRIPT.md`.
 
 ### Exit criteria
 

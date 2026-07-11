@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/pricing',
     '/case-studies',
     '/products/azure-vm-manager',
+    '/products/azure-vm-manager/demo',
     '/products/azure-vm-manager/security',
     '/products/azure-vm-manager/support',
     '/resources',

@@ -8,6 +8,7 @@ import {
   Eye,
   Layers3,
   LockKeyhole,
+  PlayCircle,
   ShieldCheck,
   ServerCog,
 } from "lucide-react";
@@ -75,6 +76,14 @@ const fit = [
   "Teams that need clearer operational history and ownership",
 ];
 
+const demoPoints = [
+  "Select a demo Azure subscription, resource group, and virtual machine target",
+  "Review the requested action before it enters the operation workflow",
+  "Track status from request through completion or review",
+  "Review the operation record for requester, target, status, and outcome",
+  "Understand what is part of assisted launch versus what still requires approval",
+];
+
 export default function AzureVmManagerPage() {
   return (
     <div className="pt-24">
@@ -128,6 +137,13 @@ export default function AzureVmManagerPage() {
               >
                 Explore the Workflow
               </a>
+              <Link
+                href="/products/azure-vm-manager/demo"
+                className="btn-secondary inline-flex items-center justify-center gap-2"
+              >
+                <PlayCircle className="h-5 w-5" />
+                Watch Demo
+              </Link>
             </div>
           </div>
         </div>
@@ -191,6 +207,42 @@ export default function AzureVmManagerPage() {
             </p>
           </div>
           <ProductWorkflowDemo />
+        </div>
+      </section>
+
+      <section className="py-20 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-12 items-start">
+            <div>
+              <PlayCircle className="h-9 w-9 text-accent-1 mb-5" />
+              <h2 className="text-4xl font-heading font-bold mb-5">
+                What the product demo shows
+              </h2>
+              <p className="text-text/70 leading-relaxed mb-7">
+                The video demo will use synthetic data to show the intended
+                workflow without exposing customer environments or live production
+                identifiers.
+              </p>
+              <Link
+                href="/products/azure-vm-manager/demo"
+                className="text-accent-1 font-semibold inline-flex items-center gap-2"
+              >
+                Open demo preview
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="grid gap-4">
+              {demoPoints.map((point) => (
+                <div
+                  key={point}
+                  className="bg-background/50 border border-accent-1/20 rounded-xl p-5 flex items-start gap-3"
+                >
+                  <CheckCircle2 className="h-5 w-5 text-accent-1 flex-shrink-0 mt-0.5" />
+                  <span className="text-text/80">{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

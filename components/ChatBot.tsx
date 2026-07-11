@@ -76,7 +76,7 @@ export default function ChatBot() {
       console.error('Chat error:', error);
       const errorMessage: Message = {
         role: 'assistant',
-        content: "I'm sorry, I'm having trouble connecting right now. Please try again or contact us directly at support@143it.com or +1 (720) 292-6098.",
+        content: "I'm sorry, I'm having trouble connecting right now. Please try again or contact us directly at support@143it.com.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);

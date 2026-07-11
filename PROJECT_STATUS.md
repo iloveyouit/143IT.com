@@ -38,6 +38,8 @@
 ### ✅ Azure VM Manager Product Launch Surface
 - [x] Product overview (`/products/azure-vm-manager`)
 - [x] Guided workflow preview with clearly labeled demo data
+- [x] Video-demo placeholder route (`/products/azure-vm-manager/demo`)
+- [x] Video-demo recording script and safety checklist (`AZURE_VM_MANAGER_VIDEO_DEMO_SCRIPT.md`)
 - [x] Dedicated product demo-request form and `/api/product-demo`
 - [x] n8n product-demo webhook support with `N8N_PRODUCT_DEMO_WEBHOOK`
 - [x] Security & Trust draft page (`/products/azure-vm-manager/security`)
@@ -117,7 +119,7 @@
 
 ## Page Count & Routes
 
-**Total Generated Routes:** 32 in the July 9, 2026 production build
+**Total Generated Routes:** 33 in the July 11, 2026 production build
 
 ### Static Pages
 1. `/` - Home
@@ -190,7 +192,7 @@ npm run docker:run
 ### Deployment Tested On
 - ✅ Local Docker Desktop (macOS)
 - ✅ Production build verified
-- ✅ Current production build generated 32 routes
+- ✅ Current production build generated 33 routes
 - ✅ HTTP endpoint responsive
 
 ## Contact Information
@@ -440,7 +442,7 @@ The 143IT website is fully functional with:
 **Docker Deployment Verified:**
 - ✅ Build time: ~7–12 seconds locally
 - ✅ Image size: ~150MB
-- ✅ 32 routes generated in latest production build
+- ✅ 33 routes generated in latest production build
 - ✅ Production optimized
 - ✅ Security hardened (non-root user)
 

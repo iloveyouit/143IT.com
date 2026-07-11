@@ -155,6 +155,17 @@ These decisions should be resolved first because they affect multiple implementa
 - **Acceptance criteria:** Automated link check reports zero broken internal links.
 - **Evidence:** Static scan checked 21 unique internal paths with zero missing routes; Next.js generated all 28 static pages successfully on July 8, 2026.
 
+### P0-06 — Separate MSP service support language from Azure VM Manager support commitments
+
+- [x] Audit homepage, About page, Pillars, service cards, chatbot responses, and service-detail pages for broad MSP support language such as “24/7 monitoring & support.”
+- [x] Rewrite broad support language so it is clearly scoped to approved MSP services and does not imply Azure VM Manager product support targets, uptime commitments, or SLA coverage.
+- [x] Add product-boundary language where needed: Azure VM Manager support commitments are documented separately on `/products/azure-vm-manager/support`, and formal product support/SLA terms remain pending approval.
+- [x] Verify that product pages, service pages, homepage, About page, and chatbot copy do not blur MSP service commitments with product support commitments.
+- **Resolved findings:** `app/about/page.tsx`, `components/Pillars.tsx`, `components/ChatBot.tsx`, `app/api/chat/route.ts`, and `README.md` were updated to remove broad “24/7”/phone-number language from public launch surfaces.
+- **Owner:** Content + Product + Business
+- **Acceptance criteria:** A buyer can distinguish general 143IT/MSP service language from Azure VM Manager product support commitments.
+- **Evidence:** Homepage Pillars, About page, chatbot fallback, chat API prompt, and README support language updated July 11, 2026; final business-owner approval remains open.
+
 ## Phase 1 — Product Surface
 
 ### P1-01 — Build `/products/azure-vm-manager`
@@ -175,13 +186,15 @@ These decisions should be resolved first because they affect multiple implementa
 ### P1-02 — Add the product demonstration
 
 - [x] Implemented a lightweight, clickable guided workflow preview.
+- [x] Added `/products/azure-vm-manager/demo` as a video-demo placeholder and future embed route.
+- [x] Added `AZURE_VM_MANAGER_VIDEO_DEMO_SCRIPT.md` with storyline, narration, shot list, safety rules, and recording/post-production checklist.
 - [x] Used fictional, clearly labeled demo-environment data and stated that the preview does not connect to Azure.
 - [x] Added native buttons, tab semantics, visible state, and keyboard access without required motion.
 - [x] Avoided heavy media; no additional lazy-loaded asset is required.
 - **Closes:** F-07, F-13
 - **Owner:** Design + Product + Web
 - **Acceptance criteria:** The actual product can be evaluated without a sales call and without exposing customer data.
-- **Evidence:** TypeScript/lint validation passed and the product route adds approximately 3.83 kB route code in the July 8, 2026 production build.
+- **Evidence:** TypeScript/lint validation passed and the product route adds approximately 3.83 kB route code in the July 8, 2026 production build. Video-demo route and script added July 11, 2026.
 
 ### P1-03 — Publish product pricing
 
@@ -329,7 +342,7 @@ These decisions should be resolved first because they affect multiple implementa
 - [ ] Confirm no secrets or customer data appear in source, logs, screenshots, or analytics.
 - **Owner:** Web + Design + Product
 - **Acceptance criteria:** No launch-blocking functional, accessibility, privacy, or performance defects remain.
-- **Evidence:** `LAUNCH_QA_MATRIX.md` and `npm run check:links` added July 9, 2026; link check passed across 25 internal routes/assets. Browser, accessibility, form, privacy, and performance execution evidence remains open.
+- **Evidence:** `LAUNCH_QA_MATRIX.md` and `npm run check:links` added July 9, 2026; link check passed across 26 internal routes/assets on July 11, 2026. Browser, accessibility, form, privacy, and performance execution evidence remains open.
 
 ### P3-05 — Add waitlist/newsletter capture
 

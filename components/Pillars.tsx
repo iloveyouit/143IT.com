@@ -9,9 +9,9 @@ export default function Pillars() {
     {
       icon: Server,
       title: "Manage",
-      description: "Proactive IT operations that keep your infrastructure running smoothly 24/7.",
+      description: "Proactive IT operations scoped to the environment, risk, and support model each engagement requires.",
       features: [
-        "24/7 monitoring & support",
+        "Monitoring and support by approved scope",
         "Patch management",
         "Infrastructure optimization",
       ],
@@ -114,4 +114,3 @@ export default function Pillars() {
     </section>
   );
 }
-

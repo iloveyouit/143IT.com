@@ -18,6 +18,10 @@
 | `product_page_view` | Azure VM Manager product route loads | `page_path`, `page_section` |
 | `product_security_page_view` | Security & Trust route loads | `page_path` |
 | `product_support_page_view` | Product Support route loads | `page_path` |
+| `product_video_demo_page_view` | Video demo route loads | `page_path` |
+| `product_video_demo_cta_click` | Visitor clicks a Watch Demo or demo-preview CTA | `cta_location`, `destination` |
+| `product_video_play` | Embedded product video starts after publication | `video_id`, `video_location` |
+| `product_video_complete` | Embedded product video reaches completion threshold | `video_id`, `video_location`, `completion_bucket` |
 | `product_workflow_demo_step_view` | Visitor selects a guided workflow step | `step_id`, `step_index` |
 | `product_pricing_section_view` | Pricing section enters viewport | `page_path` |
 | `product_demo_cta_click` | Visitor clicks a Request Demo CTA | `cta_location`, `destination` |
@@ -36,6 +40,9 @@ Allowed values:
 - `page_section`: fixed values such as `hero`, `workflow`, `pricing`, `request_demo`
 - `cta_location`: fixed values such as `header`, `hero`, `pricing`, `footer`, `support_page`
 - `destination`: public route or hash target only
+- `video_id`: fixed identifier such as `azure_vm_manager_launch_demo`
+- `video_location`: fixed value such as `demo_page`, `product_page`, or `homepage`
+- `completion_bucket`: fixed value such as `50_percent`, `75_percent`, or `complete`
 - `step_id`: fixed workflow demo step key
 - `step_index`: zero-based or one-based integer
 - `field_key`: fixed field identifier only, such as `email`, `company`, `activeAzureSubscription`
@@ -59,4 +66,3 @@ Disallowed values:
 - Default behavior should be no-op when analytics is disabled.
 - Keep events resilient: analytics failures must never block form submission.
 - Record provider configuration and dashboard owner in `PRODUCT_LAUNCH_IMPLEMENTATION_CHECKLIST.md` after D-06 is resolved.
-

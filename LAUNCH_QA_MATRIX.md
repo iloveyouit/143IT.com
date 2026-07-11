@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | Production build | `npm run build` succeeds | Build output attached or pasted |
 | Internal links | `npm run check:links` reports zero missing routes | Script output |
-| Sitemap | Product, Security, and Support pages appear in `/sitemap.xml` | Build/source inspection |
+| Sitemap | Product, Demo, Security, and Support pages appear in `/sitemap.xml` | Build/source inspection |
 | Metadata | Product pages have title, description, canonical, Open Graph, and Twitter metadata | Source or rendered inspection |
 | Structured data | Product page emits `SoftwareApplication` schema without ratings, offers, or public prices | Rendered HTML inspection |
 
@@ -30,7 +30,7 @@
 
 | Environment | Pages |
 | --- | --- |
-| Chrome desktop latest | Home, product, security, support, contact, legal |
+| Chrome desktop latest | Home, product, demo, security, support, contact, legal |
 | Edge desktop latest | Product and demo form |
 | Safari desktop latest | Product and demo form |
 | iOS Safari current | Product and demo form |
@@ -76,4 +76,3 @@ Viewport checks:
 - [ ] Public pages do not include tenant IDs, subscription IDs, customer names, or VM names.
 - [ ] Legal/privacy pages state that sensitive secrets should not be submitted through public forms.
 - [ ] Security & Trust page labels unverified controls as pending review.
-
