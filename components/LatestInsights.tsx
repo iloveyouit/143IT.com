@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { latestBlogPosts } from "@/lib/blog-posts";
+import { formatDate } from "@/lib/format-date";
 
 export default function LatestInsights() {
   const posts = latestBlogPosts.slice(0, 3);
@@ -39,7 +40,7 @@ export default function LatestInsights() {
                 <div className="flex items-center space-x-4 text-sm text-text/60 mb-4">
                   <div className="flex items-center space-x-1">
                     <Calendar className="h-4 w-4" />
-                    <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                    <span>{formatDate(post.date, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     <Clock className="h-4 w-4" />

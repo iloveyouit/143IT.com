@@ -5,6 +5,7 @@ import AuthorInfo from "./AuthorInfo";
 import RelatedPosts from "./RelatedPosts";
 import TableOfContents from "./TableOfContents";
 import StructuredData from "./StructuredData";
+import { formatDate } from "@/lib/format-date";
 
 interface BlogArticleLayoutProps {
   children: ReactNode;
@@ -101,7 +102,7 @@ export default function BlogArticleLayout({
             <div className="flex items-center space-x-2">
               <Calendar className="h-4 w-4" />
               <span>
-                {new Date(date).toLocaleDateString('en-US', {
+                {formatDate(date, {
                   month: 'long',
                   day: 'numeric',
                   year: 'numeric',
@@ -114,7 +115,7 @@ export default function BlogArticleLayout({
             </div>
             <div>
               Reviewed{" "}
-              {new Date(reviewedDate).toLocaleDateString('en-US', {
+              {formatDate(reviewedDate, {
                 month: 'long',
                 day: 'numeric',
                 year: 'numeric',

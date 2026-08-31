@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Calendar, Clock, Search, Tag } from "lucide-react";
 import type { BlogPost } from "@/lib/blog-posts";
+import { formatDate } from "@/lib/format-date";
 
 interface BlogIndexClientProps {
   posts: BlogPost[];
@@ -212,7 +213,7 @@ function PostMeta({
       <div className="flex items-center space-x-1">
         <Calendar className="h-4 w-4" />
         <span>
-          {new Date(post.date).toLocaleDateString("en-US", {
+          {formatDate(post.date, {
             month: "short",
             day: "numeric",
             ...(showYear ? { year: "numeric" } : {}),
@@ -223,7 +224,7 @@ function PostMeta({
         <Clock className="h-4 w-4" />
         <span>{post.readTime}</span>
       </div>
-      <span>Reviewed {new Date(post.lastReviewed).toLocaleDateString("en-US")}</span>
+      <span>Reviewed {formatDate(post.lastReviewed)}</span>
     </div>
   );
 }
