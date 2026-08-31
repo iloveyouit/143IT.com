@@ -16,6 +16,20 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    category: "AI + IT Series",
+    title: "Meet the Two-Agent Infrastructure Team",
+    excerpt:
+      "How a two-agent infrastructure team combines execution with independent reliability and security review for safer cloud and on-premises operations.",
+    date: "2026-08-31",
+    lastReviewed: "2026-08-31",
+    readTime: "5 min read",
+    href: "/blog/meet-the-two-agent-infrastructure-team",
+    image: "🤖",
+    tags: ["AI Agents", "Infrastructure", "Reliability", "Security", "Automation"],
+    status: "current",
+    featured: true,
+  },
+  {
     category: "Automation Chronicles",
     title: "The Complete Guide to Infrastructure as Code in 2024",
     excerpt:
@@ -27,7 +41,6 @@ export const blogPosts: BlogPost[] = [
     image: "🚀",
     tags: ["Infrastructure as Code", "Terraform", "DevOps", "Automation"],
     status: "archive",
-    featured: true,
   },
   {
     category: "Automation Chronicles",
