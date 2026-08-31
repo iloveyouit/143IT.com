@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { generateMetadata as genMeta } from "@/lib/metadata";
 
 export const metadata: Metadata = genMeta({
-  title: "Blog — Insights That Make IT Simpler | 143IT",
-  description: "Thought leadership in IT, automation, and AI integration. Explore articles on DevOps, cloud infrastructure, and modern IT operations.",
+  title: "Blog — Daily IT Operations Insights | 143IT",
+  description: "Daily practical notes on Azure operations, automation, AI workflows, Microsoft 365, DevOps, security, and cost control from 143IT.",
   path: "/blog",
 });
 
@@ -14,4 +14,3 @@ export default function BlogLayout({
 }) {
   return children;
 }
-

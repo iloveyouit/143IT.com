@@ -1,43 +1,21 @@
 import Link from "next/link";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { latestBlogPosts } from "@/lib/blog-posts";
 
 export default function LatestInsights() {
-  const posts = [
-    {
-      category: "Automation Chronicles",
-      title: "Building Self-Healing Infrastructure with PowerShell",
-      excerpt: "Learn how to implement automated remediation workflows that fix common issues before they impact users.",
-      date: "2024-03-15",
-      readTime: "8 min read",
-      href: "/blog/self-healing-infrastructure",
-    },
-    {
-      category: "DevOps Deep Dive",
-      title: "Infrastructure as Code: Terraform vs Ansible",
-      excerpt: "A practical comparison of two popular IaC tools and when to use each one in your DevOps pipeline.",
-      date: "2024-03-10",
-      readTime: "12 min read",
-      href: "/blog/terraform-vs-ansible",
-    },
-    {
-      category: "AI + IT Series",
-      title: "Integrating ChatGPT with n8n for IT Workflows",
-      excerpt: "How to leverage AI to automate ticket classification, documentation, and first-line support.",
-      date: "2024-03-05",
-      readTime: "10 min read",
-      href: "/blog/chatgpt-n8n-workflows",
-    },
-  ];
+  const posts = latestBlogPosts.slice(0, 3);
 
   return (
     <section className="py-20 px-6">
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">
-            Technical <span className="gradient-text">Article Archive</span>
+            Latest <span className="gradient-text">IT Operations Insights</span>
           </h2>
           <p className="text-lg text-text/80 max-w-2xl mx-auto">
-            Earlier articles preserved for reference; publication dates are shown clearly
+            Practical Azure, automation, AI workflow, and security notes.
+            Archive content is labeled clearly while the daily publishing
+            workflow grows.
           </p>
         </div>
 
@@ -83,7 +61,7 @@ export default function LatestInsights() {
 
         <div className="text-center mt-12">
           <Link href="/blog" className="btn-secondary">
-            Browse the Archive
+            Browse Insights
           </Link>
         </div>
       </div>

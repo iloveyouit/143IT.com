@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { blogPosts } from '@/lib/blog-posts';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://143it.com'; // Update with your actual domain
@@ -26,24 +27,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/services/security-compliance',
   ];
 
-  // Blog articles
-  const blogPages = [
-    '/blog/infrastructure-as-code-guide-2024',
-    '/blog/self-healing-infrastructure',
-  ];
-
   // Generate sitemap entries
   const routes = [
     ...staticPages.map((path) => ({
       url: `${baseUrl}${path}`,
       lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      changeFrequency: path === '/blog' ? 'daily' as const : 'monthly' as const,
       priority: path === '' ? 1.0 : path.startsWith('/services') ? 0.9 : 0.8,
     })),
-    ...blogPages.map((path) => ({
-      url: `${baseUrl}${path}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+    ...blogPosts.map((post) => ({
+      url: `${baseUrl}${post.href}`,
+      lastModified: new Date(post.lastReviewed),
+      changeFrequency: post.status === 'current' ? 'weekly' as const : 'yearly' as const,
       priority: 0.7,
     })),
   ];

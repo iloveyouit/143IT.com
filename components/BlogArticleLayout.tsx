@@ -10,6 +10,7 @@ interface BlogArticleLayoutProps {
   children: ReactNode;
   title: string;
   date: string;
+  lastReviewed?: string;
   readTime: string;
   author: {
     name: string;
@@ -32,6 +33,7 @@ export default function BlogArticleLayout({
   children,
   title,
   date,
+  lastReviewed,
   readTime,
   author,
   tags,
@@ -42,13 +44,14 @@ export default function BlogArticleLayout({
 }: BlogArticleLayoutProps) {
   const baseUrl = "https://143it.com";
   const articleUrl = href ? `${baseUrl}${href}` : `${baseUrl}/blog/${title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+  const reviewedDate = lastReviewed ?? date;
   
   // Generate BlogPosting structured data
   const blogPostingData = {
     headline: title,
     description: excerpt || title,
     datePublished: date,
-    dateModified: date,
+    dateModified: reviewedDate,
     author: {
       "@type": "Person",
       name: author.name,
@@ -108,6 +111,14 @@ export default function BlogArticleLayout({
             <div className="flex items-center space-x-2">
               <Clock className="h-4 w-4" />
               <span>{readTime}</span>
+            </div>
+            <div>
+              Reviewed{" "}
+              {new Date(reviewedDate).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })}
             </div>
           </div>
 
